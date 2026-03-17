@@ -6,9 +6,10 @@ import signal
 
 class DownloadTask:
 
-    def __init__(self, link, log_callback):
+    def __init__(self, link, log_callback, on_finished=None):
         self.link = link
         self.log_callback = log_callback
+        self.on_finished = on_finished
         self.process = None
         self._cancel_requested = False
         self._lock = threading.Lock()
@@ -106,10 +107,17 @@ class DownloadTask:
 
         process.wait()
 
+        success = (not self._cancel_requested) and process.returncode == 0
+
         if self._cancel_requested:
             self.log_callback.emit("Download cancelled")
-        else:
+        elif success:
             self.log_callback.emit("Download finished")
+        else:
+            self.log_callback.emit("Download failed")
+
+        if self.on_finished:
+            self.on_finished(success)
 
     def cancel(self):
         with self._lock:
