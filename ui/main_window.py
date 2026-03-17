@@ -16,8 +16,8 @@ from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
-from PySide6.QtGui import QGuiApplication
-from PySide6.QtCore import Signal
+from PySide6.QtGui import QGuiApplication, Qt
+from PySide6.QtCore import Qt, Signal
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
 
@@ -143,7 +143,7 @@ class MainWindow(QMainWindow):
         self.start_button = QPushButton("Start Downloads")
         buttons_row.addWidget(self.start_button)
 
-        self.clear_button = QPushButton("Clear")
+        self.clear_button = QPushButton("Clear (Downloads + Cache)")
         self.clear_button.setStyleSheet("background-color: #c0392b; color: white;")
         buttons_row.addWidget(self.clear_button)
 
