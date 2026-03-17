@@ -4,9 +4,11 @@ import re
 
 class FridaManager:
 
-    def __init__(self):
+    def __init__(self, process_tracker=None):
 
         self.device = "emulator-5554"
+        self.process_tracker = process_tracker
+        self.agent_process = None
 
     def run_adb(self, args):
 
@@ -38,13 +40,16 @@ class FridaManager:
 
     def start_frida_server(self):
 
-        subprocess.Popen([
+        process = subprocess.Popen([
             "adb",
             "-s",
             self.device,
             "shell",
             "cd /data/local/tmp && ./frida-server &"
         ])
+
+        if self.process_tracker:
+            self.process_tracker.track(process)
 
     # -------------------------
 
@@ -86,7 +91,7 @@ class FridaManager:
 
         workdir = r"C:\Users\juano\Documents\Herramientas\apple-music-downloader\apple-music-downloader-main"
 
-        subprocess.Popen(
+        self.agent_process = subprocess.Popen(
             [
                 "frida",
                 "-D",
@@ -97,3 +102,19 @@ class FridaManager:
             ],
             cwd=workdir
         )
+
+        if self.process_tracker:
+            self.process_tracker.track(self.agent_process)
+
+    # -------------------------
+
+    def stop_agent(self):
+
+        if self.agent_process and self.agent_process.poll() is None:
+            self.agent_process.terminate()
+            try:
+                self.agent_process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.agent_process.kill()
+
+        self.agent_process = None
