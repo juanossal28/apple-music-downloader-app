@@ -12,6 +12,8 @@ from PySide6.QtWidgets import (
 import threading
 import shutil
 import os
+import stat
+import time
 from pathlib import Path
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
@@ -294,6 +296,8 @@ class MainWindow(QMainWindow):
         print("Frida agent attached")
 
     def clear_downloads(self):
+        self._cancel_all_downloads()
+
         while self.download_layout.count():
             item = self.download_layout.takeAt(0)
             widget = item.widget()
@@ -305,8 +309,7 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
 
     def _cleanup_on_exit(self):
-        for task in self.download_tasks:
-            task.cancel()
+        self._cancel_all_downloads()
 
         self.frida.stop_agent()
         self.frida.stop_frida()
@@ -319,11 +322,23 @@ class MainWindow(QMainWindow):
         if not go_build_dir.exists():
             return
 
-        for child in go_build_dir.iterdir():
-            if child.is_dir():
-                shutil.rmtree(child, ignore_errors=True)
-            else:
-                try:
-                    child.unlink()
-                except OSError:
-                    pass
+        def force_remove_readonly(func, path, _):
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+
+        max_attempts = 3
+
+        for _ in range(max_attempts):
+            try:
+                shutil.rmtree(go_build_dir, onerror=force_remove_readonly)
+                break
+            except OSError:
+                time.sleep(0.5)
+
+        go_build_dir.mkdir(parents=True, exist_ok=True)
+
+    def _cancel_all_downloads(self):
+        for task in self.download_tasks:
+            task.cancel()
+
+        self.download_tasks = []
