@@ -72,8 +72,7 @@ class DownloadWidget(QFrame):
 
         self.progress_active = False
 
-        self.collapsed_height = 0
-        self.log_container.setVisible(False)
+        self._toggle_log(False)
         self.collapsed_height = self.sizeHint().height()
         self.setMinimumHeight(self.collapsed_height)
         self.setMaximumHeight(self.collapsed_height)
