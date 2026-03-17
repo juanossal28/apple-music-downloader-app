@@ -23,8 +23,6 @@ class DownloadWidget(QFrame):
 
         self.setObjectName("downloadCard")
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self.setMinimumHeight(230)
-        self.setMaximumHeight(230)
 
         layout = QVBoxLayout()
         layout.setContentsMargins(12, 12, 12, 12)
@@ -75,6 +73,9 @@ class DownloadWidget(QFrame):
         self.progress_active = False
 
         self._toggle_log(False)
+        self.collapsed_height = self.sizeHint().height()
+        self.setMinimumHeight(self.collapsed_height)
+        self.setMaximumHeight(self.collapsed_height)
 
         self.log_signal.connect(self.append_log)
 
@@ -126,6 +127,14 @@ class DownloadWidget(QFrame):
     def _toggle_log(self, expanded):
         self.log_toggle.setArrowType(Qt.DownArrow if expanded else Qt.RightArrow)
         self.log_container.setVisible(expanded)
+
+        if expanded:
+            self.setMaximumHeight(16777215)
+        else:
+            self.setMaximumHeight(self.collapsed_height)
+
+        self.setMinimumHeight(self.collapsed_height)
+        self.updateGeometry()
 
     def append_log(self, text):
 
