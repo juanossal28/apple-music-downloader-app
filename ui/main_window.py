@@ -274,9 +274,37 @@ class MainWindow(QMainWindow):
         self.emulator_button.setEnabled(not emulator_running)
         self.frida_button.setEnabled(emulator_booted)
 
+        self.update_start_button_state(emulator_running=emulator_running)
+
+    def is_required_setup_ready(self, emulator_running=None):
+
+        if emulator_running is None:
+            emulator_running = self.emulator.is_emulator_running()
+
+        return emulator_running and self.frida.is_agent_running()
+
+    def update_start_button_state(self, emulator_running=None):
+
+        setup_ready = self.is_required_setup_ready(emulator_running=emulator_running)
+        downloads_in_progress = bool(self.active_tasks or self.pending_downloads)
+        can_start = setup_ready and not downloads_in_progress
+
+        self.start_button.setEnabled(can_start)
+
+        if setup_ready:
+            self.start_button.setToolTip("")
+        else:
+            self.start_button.setToolTip(
+                "Primero inicializa todo en 'Required Setup' (Emulator + Frida Agent)."
+            )
+
     # -------------------------
 
     def start_downloads(self):
+
+        if not self.is_required_setup_ready():
+            self.update_start_button_state()
+            return
 
         if self.active_tasks or self.pending_downloads:
             return
@@ -307,7 +335,7 @@ class MainWindow(QMainWindow):
         if not self.pending_downloads:
             return
 
-        self.start_button.setEnabled(False)
+        self.update_start_button_state()
         self._start_next_downloads()
 
     # -------------------------
@@ -354,7 +382,7 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
         if not self.active_tasks and not self.pending_downloads:
-            self.start_button.setEnabled(True)
+            self.update_start_button_state()
 
     # -------------------------
 
@@ -424,7 +452,7 @@ class MainWindow(QMainWindow):
             if widget:
                 widget.deleteLater()
 
-        self.start_button.setEnabled(True)
+        self.update_start_button_state()
         clean_go_build_subfolders()
 
     def closeEvent(self, event):

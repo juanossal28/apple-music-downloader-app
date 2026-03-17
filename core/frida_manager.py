@@ -101,6 +101,15 @@ class FridaManager:
 
     # -------------------------
 
+    def is_agent_running(self):
+
+        return (
+            self.frida_process is not None
+            and self.frida_process.poll() is None
+        )
+
+    # -------------------------
+
     def stop_agent(self):
 
         if self.frida_process and self.frida_process.poll() is None:
