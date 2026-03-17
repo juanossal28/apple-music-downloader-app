@@ -17,11 +17,14 @@ from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
+from PySide6.QtCore import Signal, Qt
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
 
 
 class MainWindow(QMainWindow):
+
+    download_finished_signal = Signal(object, bool)
 
     def __init__(self):
         super().__init__()
@@ -42,7 +45,11 @@ class MainWindow(QMainWindow):
         self.frida = FridaManager()
 
         self.links_file = Path("data/links.txt")
+
+        self.max_simultaneous_downloads = 3
+        self.pending_downloads = []
         self.active_tasks = []
+        self.task_widgets = {}
 
         central = QWidget()
         main_layout = QVBoxLayout()
@@ -148,6 +155,7 @@ class MainWindow(QMainWindow):
         self.download_container = QWidget()
         self.download_layout = QVBoxLayout()
         self.download_layout.setSpacing(10)
+        self.download_layout.setAlignment(Qt.AlignTop)
 
         self.download_container.setLayout(self.download_layout)
         self.scroll.setWidget(self.download_container)
@@ -170,6 +178,7 @@ class MainWindow(QMainWindow):
         self.remove_button.clicked.connect(self.remove_link)
         self.start_button.clicked.connect(self.start_downloads)
         self.clear_button.clicked.connect(self.clear_downloads)
+        self.download_finished_signal.connect(self._on_task_finished)
 
         self.load_links()
 
@@ -252,6 +261,9 @@ class MainWindow(QMainWindow):
 
     def start_downloads(self):
 
+        if self.active_tasks or self.pending_downloads:
+            return
+
         for i in range(self.link_list.count()):
 
             link = self.link_list.item(i).text()
@@ -263,8 +275,6 @@ class MainWindow(QMainWindow):
                 track_name = metadata.get("track")
                 artist = metadata.get("artist")
                 album = metadata.get("album")
-                # track_num = metadata.get("track_number")
-                # track_total = metadata.get("track_count")
 
                 title = (
                     f"<b>{track_name}</b><br>"
@@ -275,18 +285,60 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
-            widget = DownloadWidget(title)
+            self.pending_downloads.append((link, title))
 
+        if not self.pending_downloads:
+            return
+
+        self.start_button.setEnabled(False)
+        self._start_next_downloads()
+
+    # -------------------------
+
+    def _start_next_downloads(self):
+
+        while (
+            len(self.active_tasks) < self.max_simultaneous_downloads
+            and self.pending_downloads
+        ):
+            link, title = self.pending_downloads.pop(0)
+
+            widget = DownloadWidget(title)
             self.download_layout.addWidget(widget)
 
             task = DownloadTask(
                 link,
-                widget.log_signal
+                widget.log_signal,
+                on_finished=None
             )
 
+            task.on_finished = (
+                lambda success, current_task=task:
+                self.download_finished_signal.emit(current_task, success)
+            )
+
+            self.task_widgets[task] = widget
             self.active_tasks.append(task)
             task.start()
-    
+
+    # -------------------------
+
+    def _on_task_finished(self, task, success):
+
+        if task in self.active_tasks:
+            self.active_tasks.remove(task)
+
+        widget = self.task_widgets.pop(task, None)
+
+        if success and widget:
+            self.download_layout.removeWidget(widget)
+            widget.deleteLater()
+
+        self._start_next_downloads()
+
+        if not self.active_tasks and not self.pending_downloads:
+            self.start_button.setEnabled(True)
+
     # -------------------------
 
     def start_emulator(self):
@@ -333,30 +385,36 @@ class MainWindow(QMainWindow):
         print("Frida agent attached")
 
     # -------------------------
-    
+
     def clear_downloads(self):
         """Cancela descargas, limpia widgets y borra subcarpetas go-build."""
 
-        for task in self.active_tasks:
+        self.pending_downloads.clear()
+
+        for task in list(self.active_tasks):
             task.cancel()
 
         self.active_tasks.clear()
+        self.task_widgets.clear()
 
-        # Eliminar todos los widgets del layout
         while self.download_layout.count():
             item = self.download_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
 
+        self.start_button.setEnabled(True)
         clean_go_build_subfolders()
 
     def closeEvent(self, event):
 
-        for task in self.active_tasks:
+        self.pending_downloads.clear()
+
+        for task in list(self.active_tasks):
             task.cancel()
 
         self.active_tasks.clear()
+        self.task_widgets.clear()
 
         try:
             self.frida.stop_agent()
