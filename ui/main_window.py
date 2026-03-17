@@ -155,6 +155,7 @@ class MainWindow(QMainWindow):
         self.download_container = QWidget()
         self.download_layout = QVBoxLayout()
         self.download_layout.setSpacing(10)
+        self.download_layout.setAlignment(Qt.AlignTop)
 
         self.download_container.setLayout(self.download_layout)
         self.scroll.setWidget(self.download_container)
