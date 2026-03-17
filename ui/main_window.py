@@ -391,6 +391,9 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
+            if self._is_already_downloaded(metadata):
+                continue
+
             self.pending_downloads.append((link, title))
 
         if not self.pending_downloads:
@@ -444,6 +447,7 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
         if not self.active_tasks and not self.pending_downloads:
+            self._move_completed_downloads()
             self.update_start_button_state()
 
     def _move_completed_downloads(self):
@@ -461,17 +465,48 @@ class MainWindow(QMainWindow):
             if not item.is_dir():
                 continue
 
-            target = destination_root / item.name
-            suffix = 1
-
-            while target.exists():
-                target = destination_root / f"{item.name} ({suffix})"
-                suffix += 1
-
             try:
-                shutil.move(str(item), str(target))
+                self._merge_or_move_dir(item, destination_root / item.name)
             except Exception:
                 continue
+
+    def _merge_or_move_dir(self, src_dir, dst_dir):
+
+        if not dst_dir.exists():
+            shutil.move(str(src_dir), str(dst_dir))
+            return
+
+        for child in src_dir.iterdir():
+            dst_child = dst_dir / child.name
+
+            if child.is_dir():
+                self._merge_or_move_dir(child, dst_child)
+            else:
+                if not dst_child.exists():
+                    shutil.move(str(child), str(dst_child))
+
+        try:
+            src_dir.rmdir()
+        except OSError:
+            pass
+
+    def _is_already_downloaded(self, metadata):
+
+        if not metadata or not self.download_destination:
+            return False
+
+        artist = metadata.get("artist")
+        album = metadata.get("album")
+
+        if not artist or not album:
+            return False
+
+        album_path = Path(self.download_destination) / artist / album
+
+        if not album_path.exists() or not album_path.is_dir():
+            return False
+
+        return any(p.is_file() for p in album_path.rglob("*"))
 
     # -------------------------
 
