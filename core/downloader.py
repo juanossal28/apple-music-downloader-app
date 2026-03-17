@@ -1,5 +1,7 @@
 import subprocess
 import threading
+import os
+import signal
 
 
 class DownloadTask:
@@ -7,6 +9,9 @@ class DownloadTask:
     def __init__(self, link, log_callback):
         self.link = link
         self.log_callback = log_callback
+        self.process = None
+        self._cancel_requested = False
+        self._lock = threading.Lock()
 
     def start(self):
         thread = threading.Thread(target=self.run)
@@ -27,10 +32,21 @@ class DownloadTask:
             text=True,
             encoding="utf-8",
             errors="replace",
-            bufsize=1
+            bufsize=1,
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
         )
 
+        with self._lock:
+            self.process = process
+
+            if self._cancel_requested:
+                self._kill_process_tree(process)
+
         while True:
+
+            if self._cancel_requested:
+                self._kill_process_tree(process)
+                break
 
             line = process.stdout.readline()
 
@@ -90,4 +106,30 @@ class DownloadTask:
 
         process.wait()
 
-        self.log_callback.emit("Download finished")
+        if self._cancel_requested:
+            self.log_callback.emit("Download cancelled")
+        else:
+            self.log_callback.emit("Download finished")
+
+    def cancel(self):
+        with self._lock:
+            self._cancel_requested = True
+
+            if self.process and self.process.poll() is None:
+                self._kill_process_tree(self.process)
+
+    def _kill_process_tree(self, process):
+        if process.poll() is not None:
+            return
+
+        try:
+            if os.name == "nt":
+                subprocess.run(
+                    ["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                    capture_output=True,
+                    text=True
+                )
+            else:
+                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+        except Exception:
+            pass

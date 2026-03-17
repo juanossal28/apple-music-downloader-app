@@ -7,6 +7,7 @@ class FridaManager:
     def __init__(self):
 
         self.device = "emulator-5554"
+        self.frida_process = None
 
     def run_adb(self, args):
 
@@ -86,7 +87,7 @@ class FridaManager:
 
         workdir = r"C:\Users\juano\Documents\Herramientas\apple-music-downloader\apple-music-downloader-main"
 
-        subprocess.Popen(
+        self.frida_process = subprocess.Popen(
             [
                 "frida",
                 "-D",
@@ -97,3 +98,12 @@ class FridaManager:
             ],
             cwd=workdir
         )
+
+    # -------------------------
+
+    def stop_agent(self):
+
+        if self.frida_process and self.frida_process.poll() is None:
+            self.frida_process.kill()
+
+        self.frida_process = None

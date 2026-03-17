@@ -18,6 +18,7 @@ from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
 from core.apple_music_api import fetch_metadata
+from core.system_cleanup import clean_go_build_subfolders
 
 
 class MainWindow(QMainWindow):
@@ -41,6 +42,7 @@ class MainWindow(QMainWindow):
         self.frida = FridaManager()
 
         self.links_file = Path("data/links.txt")
+        self.active_tasks = []
 
         central = QWidget()
         main_layout = QVBoxLayout()
@@ -282,6 +284,7 @@ class MainWindow(QMainWindow):
                 widget.log_signal
             )
 
+            self.active_tasks.append(task)
             task.start()
     
     # -------------------------
@@ -332,11 +335,40 @@ class MainWindow(QMainWindow):
     # -------------------------
     
     def clear_downloads(self):
-        """Limpia todos los widgets de descargas del contenedor"""
-        
+        """Cancela descargas, limpia widgets y borra subcarpetas go-build."""
+
+        for task in self.active_tasks:
+            task.cancel()
+
+        self.active_tasks.clear()
+
         # Eliminar todos los widgets del layout
         while self.download_layout.count():
             item = self.download_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
+
+        clean_go_build_subfolders()
+
+    def closeEvent(self, event):
+
+        for task in self.active_tasks:
+            task.cancel()
+
+        self.active_tasks.clear()
+
+        try:
+            self.frida.stop_agent()
+            self.frida.stop_frida()
+        except Exception:
+            pass
+
+        try:
+            self.emulator.stop()
+        except Exception:
+            pass
+
+        clean_go_build_subfolders()
+
+        super().closeEvent(event)
