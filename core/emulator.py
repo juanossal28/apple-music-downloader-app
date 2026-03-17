@@ -29,6 +29,9 @@ class EmulatorManager:
 
     def start(self):
 
+        if self.is_emulator_running():
+            return
+
         subprocess.run([self.adb, "start-server"])
 
         time.sleep(2)
@@ -38,6 +41,40 @@ class EmulatorManager:
             "-avd",
             self.avd
         ])
+
+    def is_emulator_running(self):
+
+        if self.emulator_process and self.emulator_process.poll() is None:
+            return True
+
+        try:
+            result = subprocess.run(
+                ["tasklist", "/FI", "IMAGENAME eq emulator.exe"],
+                capture_output=True,
+                text=True
+            )
+            if "emulator.exe" in result.stdout.lower():
+                return True
+
+            result = subprocess.run(
+                ["tasklist", "/FI", "IMAGENAME eq qemu-system-x86_64.exe"],
+                capture_output=True,
+                text=True
+            )
+            return "qemu-system-x86_64.exe" in result.stdout.lower()
+        except Exception:
+            return False
+
+    def is_boot_completed(self):
+
+        if not self.is_emulator_running():
+            return False
+
+        try:
+            result = self._run_adb(["shell", "getprop", "sys.boot_completed"])
+            return result.returncode == 0 and result.stdout.strip() == "1"
+        except Exception:
+            return False
 
     def stop(self):
 

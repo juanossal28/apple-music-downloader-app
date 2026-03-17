@@ -16,8 +16,8 @@ from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
-from PySide6.QtGui import QGuiApplication, Qt
-from PySide6.QtCore import Signal, Qt
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
 
@@ -50,6 +50,10 @@ class MainWindow(QMainWindow):
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
+
+        self.emulator_state_timer = QTimer(self)
+        self.emulator_state_timer.setInterval(1500)
+        self.emulator_state_timer.timeout.connect(self.refresh_setup_buttons)
 
         central = QWidget()
         main_layout = QVBoxLayout()
@@ -180,6 +184,9 @@ class MainWindow(QMainWindow):
         self.clear_button.clicked.connect(self.clear_downloads)
         self.download_finished_signal.connect(self._on_task_finished)
 
+        self.refresh_setup_buttons()
+        self.emulator_state_timer.start()
+
         self.load_links()
 
     # -------------------------
@@ -256,6 +263,16 @@ class MainWindow(QMainWindow):
         self.link_list.takeItem(row)
 
         self.save_links()
+
+    # -------------------------
+
+    def refresh_setup_buttons(self):
+
+        emulator_running = self.emulator.is_emulator_running()
+        emulator_booted = self.emulator.is_boot_completed()
+
+        self.emulator_button.setEnabled(not emulator_running)
+        self.frida_button.setEnabled(emulator_booted)
 
     # -------------------------
 
@@ -344,10 +361,14 @@ class MainWindow(QMainWindow):
     def start_emulator(self):
 
         self.emulator.start()
+        self.refresh_setup_buttons()
 
     # -------------------------
 
     def prepare_frida(self):
+
+        if not self.emulator.is_boot_completed():
+            return
 
         thread = threading.Thread(target=self._prepare_frida_worker)
         thread.daemon = True

@@ -46,9 +46,9 @@ class DownloadWidget(QFrame):
         self.log_toggle.setObjectName("logToggle")
         self.log_toggle.setText("Details")
         self.log_toggle.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        self.log_toggle.setArrowType(Qt.DownArrow)
+        self.log_toggle.setArrowType(Qt.RightArrow)
         self.log_toggle.setCheckable(True)
-        self.log_toggle.setChecked(True)
+        self.log_toggle.setChecked(False)
         self.log_toggle.toggled.connect(self._toggle_log)
 
         toggle_row = QHBoxLayout()
@@ -73,6 +73,8 @@ class DownloadWidget(QFrame):
         self.setLayout(layout)
 
         self.progress_active = False
+
+        self._toggle_log(False)
 
         self.log_signal.connect(self.append_log)
 
@@ -117,7 +119,7 @@ class DownloadWidget(QFrame):
             color: #cfd5de;
             font-family: Consolas, "Courier New", monospace;
             font-size: 11px;
-            padding: 4px;
+            padding: 10px 8px;
         }
         """)
 
