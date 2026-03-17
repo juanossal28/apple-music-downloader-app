@@ -20,6 +20,7 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
+from core.paths import get_project_root
 
 
 class MainWindow(QMainWindow):
@@ -44,7 +45,7 @@ class MainWindow(QMainWindow):
         self.emulator = EmulatorManager()
         self.frida = FridaManager()
 
-        self.links_file = Path("data/links.txt")
+        self.links_file = get_project_root() / "data" / "links.txt"
 
         self.max_simultaneous_downloads = 3
         self.pending_downloads = []

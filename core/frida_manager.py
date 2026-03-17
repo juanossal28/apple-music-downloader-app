@@ -1,6 +1,8 @@
 import subprocess
 import re
 
+from core.paths import get_amd_workdir
+
 
 class FridaManager:
 
@@ -85,7 +87,7 @@ class FridaManager:
 
     def attach_agent(self, pid):
 
-        workdir = r"C:\Users\juano\Documents\Herramientas\apple-music-downloader\apple-music-downloader-main"
+        workdir = str(get_amd_workdir())
 
         self.frida_process = subprocess.Popen(
             [
