@@ -7,11 +7,14 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QLabel,
-    QListWidget
+    QListWidget,
+    QFileDialog,
+    QMessageBox
 )
 import threading
-
+import shutil
 from pathlib import Path
+
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
@@ -20,7 +23,11 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
-from core.paths import get_project_root
+from core.paths import (
+    get_project_root,
+    get_amd_downloads_dir,
+    get_download_destination_file,
+)
 
 
 class MainWindow(QMainWindow):
@@ -47,10 +54,13 @@ class MainWindow(QMainWindow):
 
         self.links_file = get_project_root() / "data" / "links.txt"
 
-        self.max_simultaneous_downloads = 3
+        # Se ejecuta en serie para mover correctamente cada carpeta al finalizar.
+        self.max_simultaneous_downloads = 1
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
+        self.download_destination_file = get_download_destination_file()
+        self.download_destination = self.load_download_destination()
 
         self.emulator_state_timer = QTimer(self)
         self.emulator_state_timer.setInterval(1500)
@@ -148,11 +158,21 @@ class MainWindow(QMainWindow):
         self.start_button = QPushButton("Start Downloads")
         buttons_row.addWidget(self.start_button)
 
+        self.select_destination_button = QPushButton("Select Folder")
+        buttons_row.addWidget(self.select_destination_button)
+
         self.clear_button = QPushButton("Clear")
         self.clear_button.setStyleSheet("background-color: #c0392b; color: white;")
         buttons_row.addWidget(self.clear_button)
 
         col_right.addLayout(buttons_row)
+
+        self.destination_label = QLabel(
+            self._format_destination_label(self.download_destination)
+        )
+        self.destination_label.setWordWrap(True)
+        self.destination_label.setStyleSheet("color: #7f8c8d;")
+        col_right.addWidget(self.destination_label)
 
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
@@ -182,6 +202,7 @@ class MainWindow(QMainWindow):
         self.clipboard_button.clicked.connect(self.add_from_clipboard)
         self.remove_button.clicked.connect(self.remove_link)
         self.start_button.clicked.connect(self.start_downloads)
+        self.select_destination_button.clicked.connect(self.select_download_destination)
         self.clear_button.clicked.connect(self.clear_downloads)
         self.download_finished_signal.connect(self._on_task_finished)
 
@@ -189,6 +210,37 @@ class MainWindow(QMainWindow):
         self.emulator_state_timer.start()
 
         self.load_links()
+
+    # -------------------------
+
+    def _format_destination_label(self, destination):
+        if destination:
+            return f"Destination: {destination}"
+        return "Destination: not selected"
+
+    def load_download_destination(self):
+        if not self.download_destination_file.exists():
+            return None
+
+        destination = self.download_destination_file.read_text(encoding="utf-8").strip()
+        return destination or None
+
+    def save_download_destination(self, destination):
+        self.download_destination_file.write_text(destination, encoding="utf-8")
+
+    def select_download_destination(self):
+        selected = QFileDialog.getExistingDirectory(
+            self,
+            "Select folder for completed downloads",
+            self.download_destination or str(get_project_root())
+        )
+
+        if not selected:
+            return
+
+        self.download_destination = selected
+        self.save_download_destination(selected)
+        self.destination_label.setText(self._format_destination_label(selected))
 
     # -------------------------
 
@@ -310,6 +362,14 @@ class MainWindow(QMainWindow):
         if self.active_tasks or self.pending_downloads:
             return
 
+        if not self.download_destination or not Path(self.download_destination).exists():
+            QMessageBox.warning(
+                self,
+                "Destination required",
+                "Select a destination folder before starting downloads."
+            )
+            return
+
         for i in range(self.link_list.count()):
 
             link = self.link_list.item(i).text()
@@ -377,6 +437,7 @@ class MainWindow(QMainWindow):
         widget = self.task_widgets.pop(task, None)
 
         if success and widget:
+            self._move_completed_downloads()
             self.download_layout.removeWidget(widget)
             widget.deleteLater()
 
@@ -384,6 +445,33 @@ class MainWindow(QMainWindow):
 
         if not self.active_tasks and not self.pending_downloads:
             self.update_start_button_state()
+
+    def _move_completed_downloads(self):
+
+        source_root = get_amd_downloads_dir()
+
+        if not source_root.exists() or not self.download_destination:
+            return
+
+        destination_root = Path(self.download_destination)
+        destination_root.mkdir(parents=True, exist_ok=True)
+
+        for item in source_root.iterdir():
+
+            if not item.is_dir():
+                continue
+
+            target = destination_root / item.name
+            suffix = 1
+
+            while target.exists():
+                target = destination_root / f"{item.name} ({suffix})"
+                suffix += 1
+
+            try:
+                shutil.move(str(item), str(target))
+            except Exception:
+                continue
 
     # -------------------------
 
