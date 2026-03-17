@@ -16,6 +16,7 @@ class EmulatorManager:
         )
 
         self.avd = "Pixel_3"
+        self.emulator_process = None
 
     def start(self):
 
@@ -23,8 +24,15 @@ class EmulatorManager:
 
         time.sleep(2)
 
-        subprocess.Popen([
+        self.emulator_process = subprocess.Popen([
             self.emulator,
             "-avd",
             self.avd
         ])
+
+    def stop(self):
+
+        if self.emulator_process and self.emulator_process.poll() is None:
+            self.emulator_process.kill()
+
+        self.emulator_process = None
