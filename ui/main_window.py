@@ -17,7 +17,7 @@ from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
-from PySide6.QtCore import Signal, Qt
+from PySide6.QtCore import Signal
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
 
