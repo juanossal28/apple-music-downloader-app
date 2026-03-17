@@ -3,6 +3,8 @@ import threading
 import os
 import signal
 
+from core.paths import get_amd_workdir
+
 
 class DownloadTask:
 
@@ -26,7 +28,7 @@ class DownloadTask:
 
         process = subprocess.Popen(
             ["go", "run", "main.go", "--song", self.link],
-            cwd="C:\\Users\\juano\\Documents\\Herramientas\\apple-music-downloader\\apple-music-downloader-main",
+            cwd=str(get_amd_workdir()),
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,
