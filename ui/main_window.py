@@ -10,12 +10,16 @@ from PySide6.QtWidgets import (
     QListWidget
 )
 import threading
-
+import shutil
+import os
+import stat
+import time
 from pathlib import Path
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
+from core.process_tracker import ProcessTracker
 from PySide6.QtGui import QGuiApplication
 from core.apple_music_api import fetch_metadata
 
@@ -37,31 +41,24 @@ class MainWindow(QMainWindow):
 
         self.resize(width, height)
 
-        self.emulator = EmulatorManager()
-        self.frida = FridaManager()
+        self.process_tracker = ProcessTracker()
+        self.emulator = EmulatorManager(process_tracker=self.process_tracker)
+        self.frida = FridaManager(process_tracker=self.process_tracker)
+        self.download_tasks = []
 
         self.links_file = Path("data/links.txt")
 
         central = QWidget()
         main_layout = QVBoxLayout()
 
-        # -----------------------------
-        # MAIN 3 COLUMN LAYOUT
-        # -----------------------------
-
         columns_layout = QHBoxLayout()
         columns_layout.setSpacing(15)
-
-        # =====================================================
-        # COLUMN 1 (LEFT) - EMULATOR / FRIDA
-        # =====================================================
 
         col_left = QVBoxLayout()
 
         required_title = QLabel("Required Setup")
         col_left.addWidget(required_title)
 
-        # ----- BUTTON 1 -----
         self.emulator_button = QPushButton()
         btn1_layout = QHBoxLayout(self.emulator_button)
         btn1_layout.setContentsMargins(10, 0, 10, 0)
@@ -76,7 +73,6 @@ class MainWindow(QMainWindow):
 
         col_left.addWidget(self.emulator_button)
 
-        # ----- BUTTON 2 -----
         self.frida_button = QPushButton()
         btn2_layout = QHBoxLayout(self.frida_button)
         btn2_layout.setContentsMargins(10, 0, 10, 0)
@@ -91,13 +87,9 @@ class MainWindow(QMainWindow):
 
         col_left.addWidget(self.frida_button)
 
-        col_left.addStretch()  # espacio para futuros botones
+        col_left.addStretch()
 
         columns_layout.addLayout(col_left, 1)
-
-        # =====================================================
-        # COLUMN 2 (CENTER) - LINKS
-        # =====================================================
 
         col_center = QVBoxLayout()
 
@@ -119,16 +111,11 @@ class MainWindow(QMainWindow):
 
         columns_layout.addLayout(col_center, 2)
 
-        # =====================================================
-        # COLUMN 3 (RIGHT) - DOWNLOADS
-        # =====================================================
-
         col_right = QVBoxLayout()
 
         downloads_title = QLabel("Downloads")
         col_right.addWidget(downloads_title)
 
-        # BOTONES ROW (Start + Clear)
         buttons_row = QHBoxLayout()
 
         self.start_button = QPushButton("Start Downloads")
@@ -154,14 +141,11 @@ class MainWindow(QMainWindow):
 
         columns_layout.addLayout(col_right, 4)
 
-        # -----------------------------
-
         main_layout.addLayout(columns_layout)
 
         central.setLayout(main_layout)
         self.setCentralWidget(central)
 
-        # conexiones
         self.emulator_button.clicked.connect(self.start_emulator)
         self.frida_button.clicked.connect(self.prepare_frida)
         self.clipboard_button.clicked.connect(self.add_from_clipboard)
@@ -170,8 +154,6 @@ class MainWindow(QMainWindow):
         self.clear_button.clicked.connect(self.clear_downloads)
 
         self.load_links()
-
-    # -------------------------
 
     def load_links(self):
 
@@ -186,8 +168,6 @@ class MainWindow(QMainWindow):
             if link:
                 self.link_list.addItem(link)
 
-    # -------------------------
-
     def save_links(self):
 
         links = []
@@ -199,8 +179,6 @@ class MainWindow(QMainWindow):
             for link in links:
                 f.write(link + "\n")
 
-    # -------------------------
-
     def add_from_clipboard(self):
 
         clipboard = QApplication.clipboard()
@@ -211,15 +189,12 @@ class MainWindow(QMainWindow):
 
         lines = text.splitlines()
 
-        added = 0
-
         for line in lines:
             link = line.strip()
 
             if not link:
                 continue
 
-            # evitar duplicados
             exists = False
             for i in range(self.link_list.count()):
                 if self.link_list.item(i).text() == link:
@@ -228,11 +203,8 @@ class MainWindow(QMainWindow):
 
             if not exists:
                 self.link_list.addItem(link)
-                added += 1
 
         self.save_links()
-
-    # -------------------------
 
     def remove_link(self):
 
@@ -245,8 +217,6 @@ class MainWindow(QMainWindow):
         self.link_list.takeItem(row)
 
         self.save_links()
-
-    # -------------------------
 
     def start_downloads(self):
 
@@ -261,8 +231,6 @@ class MainWindow(QMainWindow):
                 track_name = metadata.get("track")
                 artist = metadata.get("artist")
                 album = metadata.get("album")
-                # track_num = metadata.get("track_number")
-                # track_total = metadata.get("track_count")
 
                 title = (
                     f"<b>{track_name}</b><br>"
@@ -279,18 +247,16 @@ class MainWindow(QMainWindow):
 
             task = DownloadTask(
                 link,
-                widget.log_signal
+                widget.log_signal,
+                process_tracker=self.process_tracker
             )
 
+            self.download_tasks.append(task)
             task.start()
-    
-    # -------------------------
 
     def start_emulator(self):
 
         self.emulator.start()
-
-    # -------------------------
 
     def prepare_frida(self):
 
@@ -329,14 +295,50 @@ class MainWindow(QMainWindow):
 
         print("Frida agent attached")
 
-    # -------------------------
-    
     def clear_downloads(self):
-        """Limpia todos los widgets de descargas del contenedor"""
-        
-        # Eliminar todos los widgets del layout
+        self._cancel_all_downloads()
+
         while self.download_layout.count():
             item = self.download_layout.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
+
+    def closeEvent(self, event):
+        self._cleanup_on_exit()
+        super().closeEvent(event)
+
+    def _cleanup_on_exit(self):
+        self._cancel_all_downloads()
+
+        self.frida.stop_agent()
+        self.frida.stop_frida()
+        self.emulator.stop()
+        self._cleanup_go_build_cache()
+
+    def _cleanup_go_build_cache(self):
+        go_build_dir = Path(os.path.expandvars(r"%USERPROFILE%\AppData\Local\go-build"))
+
+        if not go_build_dir.exists():
+            return
+
+        def force_remove_readonly(func, path, _):
+            os.chmod(path, stat.S_IWRITE)
+            func(path)
+
+        max_attempts = 3
+
+        for _ in range(max_attempts):
+            try:
+                shutil.rmtree(go_build_dir, onerror=force_remove_readonly)
+                break
+            except OSError:
+                time.sleep(0.5)
+
+        go_build_dir.mkdir(parents=True, exist_ok=True)
+
+    def _cancel_all_downloads(self):
+        for task in self.download_tasks:
+            task.cancel()
+
+        self.download_tasks = []
