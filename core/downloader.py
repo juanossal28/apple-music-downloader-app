@@ -11,7 +11,6 @@ class DownloadTask:
         self.process_tracker = process_tracker
         self.process = None
         self._cancel_requested = False
-        self._cancel_notified = False
         self._lock = threading.Lock()
 
     def start(self):
@@ -24,37 +23,16 @@ class DownloadTask:
 
         with self._lock:
             if self.process and self.process.poll() is None:
-                self._kill_process_tree(self.process.pid)
+                self.process.terminate()
 
-        if not self._cancel_notified:
-            self.log_callback.emit("[CANCELLED] Download cancelled")
-            self._cancel_notified = True
-
-    def _kill_process_tree(self, pid):
-        if os.name == "nt":
-            subprocess.run(
-                ["taskkill", "/PID", str(pid), "/T", "/F"],
-                capture_output=True,
-                text=True
-            )
-        else:
-            try:
-                os.kill(pid, 15)
-            except OSError:
-                pass
+        self.log_callback.emit("[CANCELLED] Download cancelled")
 
     def run(self):
 
         retry_count = 0
         max_retries = 3
 
-        if self._cancel_requested:
-            return
-
         with self._lock:
-            if self._cancel_requested:
-                return
-
             self.process = subprocess.Popen(
                 ["go", "run", "main.go", "--song", self.link],
                 cwd="C:\\Users\\juano\\Documents\\Herramientas\\apple-music-downloader\\apple-music-downloader-main",
@@ -73,9 +51,6 @@ class DownloadTask:
         while True:
 
             if self._cancel_requested:
-                with self._lock:
-                    if self.process and self.process.poll() is None:
-                        self._kill_process_tree(self.process.pid)
                 break
 
             line = self.process.stdout.readline()
@@ -129,7 +104,7 @@ class DownloadTask:
             try:
                 self.process.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                self._kill_process_tree(self.process.pid)
+                self.process.kill()
 
         if not self._cancel_requested:
             self.log_callback.emit("Download finished")
