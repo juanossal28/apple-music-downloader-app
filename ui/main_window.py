@@ -16,8 +16,8 @@ from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
-from PySide6.QtGui import QGuiApplication
-from PySide6.QtCore import Signal, Qt, QTimer
+from PySide6.QtGui import QGuiApplication, Qt
+from PySide6.QtCore import Qt, Signal
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
 
@@ -50,10 +50,6 @@ class MainWindow(QMainWindow):
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
-
-        self.setup_state_timer = QTimer(self)
-        self.setup_state_timer.setInterval(2000)
-        self.setup_state_timer.timeout.connect(self.update_setup_buttons)
 
         central = QWidget()
         main_layout = QVBoxLayout()
@@ -147,7 +143,7 @@ class MainWindow(QMainWindow):
         self.start_button = QPushButton("Start Downloads")
         buttons_row.addWidget(self.start_button)
 
-        self.clear_button = QPushButton("Clear")
+        self.clear_button = QPushButton("Clear (Downloads + Cache)")
         self.clear_button.setStyleSheet("background-color: #c0392b; color: white;")
         buttons_row.addWidget(self.clear_button)
 
@@ -432,8 +428,6 @@ class MainWindow(QMainWindow):
         clean_go_build_subfolders()
 
     def closeEvent(self, event):
-
-        self.setup_state_timer.stop()
 
         self.pending_downloads.clear()
 

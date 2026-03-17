@@ -27,37 +27,6 @@ class EmulatorManager:
             text=True
         )
 
-    def is_emulator_process_running(self):
-
-        try:
-            if os.name == "nt":
-                result = subprocess.run(
-                    ["tasklist", "/FI", "IMAGENAME eq emulator.exe"],
-                    capture_output=True,
-                    text=True
-                )
-                return "emulator.exe" in result.stdout.lower()
-
-            result = subprocess.run(
-                ["pgrep", "-f", "emulator"],
-                capture_output=True,
-                text=True
-            )
-            return result.returncode == 0 and bool(result.stdout.strip())
-        except Exception:
-            return False
-
-    def is_boot_completed(self):
-
-        if not self.is_emulator_process_running():
-            return False
-
-        try:
-            result = self._run_adb(["shell", "getprop", "sys.boot_completed"])
-            return result.returncode == 0 and result.stdout.strip() == "1"
-        except Exception:
-            return False
-
     def start(self):
 
         subprocess.run([self.adb, "start-server"])
