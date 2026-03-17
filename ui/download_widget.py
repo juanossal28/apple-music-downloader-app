@@ -74,6 +74,9 @@ class DownloadWidget(QFrame):
 
         self.collapsed_height = self.sizeHint().height()
         self._toggle_log(False)
+        self.collapsed_height = self.sizeHint().height()
+        self.setMinimumHeight(self.collapsed_height)
+        self.setMaximumHeight(self.collapsed_height)
 
         self.log_signal.connect(self.append_log)
 
@@ -132,9 +135,9 @@ class DownloadWidget(QFrame):
         if expanded:
             self.setMaximumHeight(16777215)
         else:
-            self.setMaximumHeight(collapsed_height)
+            self.setMaximumHeight(self.collapsed_height)
 
-        self.setMinimumHeight(collapsed_height)
+        self.setMinimumHeight(self.collapsed_height)
         self.updateGeometry()
 
     def append_log(self, text):
