@@ -1,12 +1,13 @@
-import subprocess
-import threading
 import os
 import signal
+import subprocess
+import threading
 
 from core.paths import get_amd_workdir
 
 
 class DownloadTask:
+    MAX_RETRIES = 3
 
     def __init__(self, link, log_callback, on_finished=None):
         self.link = link
@@ -17,14 +18,11 @@ class DownloadTask:
         self._lock = threading.Lock()
 
     def start(self):
-        thread = threading.Thread(target=self.run)
-        thread.daemon = True
+        thread = threading.Thread(target=self.run, daemon=True)
         thread.start()
 
     def run(self):
-
         retry_count = 0
-        max_retries = 3
 
         process = subprocess.Popen(
             ["go", "run", "main.go", "--song", self.link],
@@ -36,71 +34,62 @@ class DownloadTask:
             encoding="utf-8",
             errors="replace",
             bufsize=1,
-            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
         )
 
         with self._lock:
             self.process = process
-
             if self._cancel_requested:
                 self._kill_process_tree(process)
 
-        while True:
+        if process.stdout is None:
+            process.wait()
+            self._finish(process)
+            return
 
+        while True:
             if self._cancel_requested:
                 self._kill_process_tree(process)
                 break
 
             line = process.stdout.readline()
-
             if not line:
                 break
 
             clean_line = line.strip()
-
             if not clean_line:
                 continue
 
-            # -------------------------
-            # PROGRESO DOWNLOAD
-            # -------------------------
             if clean_line.startswith("Downloading"):
                 try:
                     percent = clean_line.split("%")[0].split()[-1]
                     self.log_callback.emit(f"[PROGRESS] Downloading... {percent}%")
-                except:
+                except Exception:
                     pass
                 continue
 
-            # -------------------------
-            # PROGRESO DECRYPT
-            # -------------------------
             if clean_line.startswith("Decrypting"):
                 try:
                     percent = clean_line.split("%")[0].split()[-1]
                     self.log_callback.emit(f"[PROGRESS] Decrypting... {percent}%")
-                except:
+                except Exception:
                     pass
                 continue
 
             self.log_callback.emit(clean_line)
 
-            # -------------------------
-            # AUTO RETRY
-            # -------------------------
             if "press Enter to try again" in clean_line:
-
-                if retry_count < max_retries:
-
+                if retry_count < self.MAX_RETRIES:
                     self.log_callback.emit(
-                        f"[AUTO RETRY] Attempt {retry_count + 1}/{max_retries}"
+                        f"[AUTO RETRY] Attempt {retry_count + 1}/{self.MAX_RETRIES}"
                     )
 
                     try:
-                        process.stdin.write("\n")
-                        process.stdin.flush()
-                        retry_count += 1
-                    except:
+                        if process.stdin is not None:
+                            process.stdin.write("\n")
+                            process.stdin.flush()
+                            retry_count += 1
+                    except Exception:
                         pass
                 else:
                     self.log_callback.emit(
@@ -108,7 +97,9 @@ class DownloadTask:
                     )
 
         process.wait()
+        self._finish(process)
 
+    def _finish(self, process):
         success = (not self._cancel_requested) and process.returncode == 0
 
         if self._cancel_requested:
@@ -137,7 +128,7 @@ class DownloadTask:
                 subprocess.run(
                     ["taskkill", "/PID", str(process.pid), "/T", "/F"],
                     capture_output=True,
-                    text=True
+                    text=True,
                 )
             else:
                 os.killpg(os.getpgid(process.pid), signal.SIGKILL)
