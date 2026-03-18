@@ -22,6 +22,7 @@ from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
+from core.download_detection import is_already_downloaded
 from core.system_cleanup import clean_go_build_subfolders
 from core.paths import (
     get_project_root,
@@ -405,20 +406,7 @@ class MainWindow(QMainWindow):
             pass
 
     def _is_already_downloaded(self, metadata):
-        if not metadata or not self.download_destination:
-            return False
-
-        artist = metadata.get("artist")
-        album = metadata.get("album")
-
-        if not artist or not album:
-            return False
-
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
-            return False
-
-        return any(path.is_file() for path in album_path.rglob("*"))
+        return is_already_downloaded(metadata, self.download_destination)
 
     def start_emulator(self):
         self.emulator.start()
