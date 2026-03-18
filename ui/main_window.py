@@ -11,8 +11,9 @@ from PySide6.QtWidgets import (
     QFileDialog,
     QMessageBox,
 )
-import threading
+import re
 import shutil
+import threading
 from pathlib import Path
 
 from core.downloader import DownloadTask
@@ -28,6 +29,41 @@ from core.paths import (
     get_amd_downloads_dir,
     get_download_destination_file,
 )
+
+
+INVALID_PATH_CHARS_RE = re.compile(r'[\\/<>:"|?*]')
+AUDIO_EXTENSIONS = {
+    ".aac",
+    ".alac",
+    ".caf",
+    ".flac",
+    ".m4a",
+    ".m4b",
+    ".m4p",
+    ".mp3",
+    ".mp4",
+    ".ogg",
+    ".opus",
+    ".wav",
+    ".wma",
+}
+
+
+def sanitize_component(value):
+    if not value:
+        return ""
+
+    sanitized = INVALID_PATH_CHARS_RE.sub("_", str(value)).strip()
+    if sanitized.endswith("."):
+        sanitized = sanitized.replace(".", "")
+
+    return sanitized.strip()
+
+
+def normalize_for_match(value):
+    sanitized = sanitize_component(value)
+    return re.sub(r"[^a-z0-9]+", "", sanitized.casefold())
+
 
 
 class MainWindow(QMainWindow):
@@ -404,6 +440,67 @@ class MainWindow(QMainWindow):
         except OSError:
             pass
 
+    def _matching_directories(self, root_path, expected_name, *, allow_partial=False):
+        expected_normalized = normalize_for_match(expected_name)
+        if not expected_normalized or not root_path.exists():
+            return []
+
+        matches = []
+        for child in root_path.iterdir():
+            if not child.is_dir():
+                continue
+
+            child_normalized = normalize_for_match(child.name)
+            is_match = child_normalized == expected_normalized
+
+            if allow_partial and child_normalized and expected_normalized:
+                is_match = is_match or (
+                    expected_normalized in child_normalized
+                    or child_normalized in expected_normalized
+                )
+
+            if is_match:
+                matches.append(child)
+
+        return matches
+
+    def _find_album_directories(self, destination_root, artist, album):
+        artist_dirs = self._matching_directories(destination_root, artist)
+        album_dirs = []
+
+        for artist_dir in artist_dirs:
+            album_dirs.extend(
+                self._matching_directories(artist_dir, album, allow_partial=True)
+            )
+
+        return album_dirs
+
+    def _audio_files_in_directory(self, directory):
+        return [
+            path
+            for path in directory.rglob("*")
+            if path.is_file() and path.suffix.lower() in AUDIO_EXTENSIONS
+        ]
+
+    def _matches_downloaded_track(self, audio_file, metadata):
+        normalized_stem = normalize_for_match(audio_file.stem)
+        if not normalized_stem:
+            return False
+
+        track_name = metadata.get("track")
+        normalized_track = normalize_for_match(track_name)
+        if normalized_track and normalized_track in normalized_stem:
+            return True
+
+        track_number = metadata.get("track_number")
+        if track_number:
+            track_number = str(track_number)
+            padded_track_number = track_number.zfill(2)
+            if re.match(rf"^(?:{track_number}|{padded_track_number})\b", audio_file.stem):
+                return True
+
+        return False
+
     def _is_already_downloaded(self, metadata):
         if not metadata or not self.download_destination:
             return False
@@ -414,11 +511,20 @@ class MainWindow(QMainWindow):
         if not artist or not album:
             return False
 
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
+        destination_root = Path(self.download_destination)
+        album_dirs = self._find_album_directories(destination_root, artist, album)
+        if not album_dirs:
             return False
 
-        return any(path.is_file() for path in album_path.rglob("*"))
+        for album_dir in album_dirs:
+            audio_files = self._audio_files_in_directory(album_dir)
+            if not audio_files:
+                continue
+
+            if any(self._matches_downloaded_track(path, metadata) for path in audio_files):
+                return True
+
+        return False
 
     def start_emulator(self):
         self.emulator.start()

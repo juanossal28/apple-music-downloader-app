@@ -41,6 +41,10 @@ def extract_ids(link):
     if track_match:
         track_id = track_match.group(1)
 
+    song_match = re.search(r"/song(?:/.+)?/(?:id)?(\d+)", link)
+    if not track_id and song_match:
+        track_id = song_match.group(1)
+
     album_match = re.search(r"/album/.+?/(\d+)", link)
     if album_match:
         album_id = album_match.group(1)
