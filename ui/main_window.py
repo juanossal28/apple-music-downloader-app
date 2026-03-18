@@ -380,7 +380,10 @@ class MainWindow(QMainWindow):
         widget = self.task_widgets.pop(task, None)
 
         if success:
-            self.completed_download_links[task.link] = getattr(task, "metadata", None)
+            self.completed_download_links[task.link] = {
+                "metadata": getattr(task, "metadata", None),
+                "relative_album_path": getattr(task, "relative_album_path", None),
+            }
 
         if success and widget:
             self.download_layout.removeWidget(widget)
@@ -441,10 +444,24 @@ class MainWindow(QMainWindow):
         completed_links = dict(self.completed_download_links)
         self.completed_download_links.clear()
 
-        for link, metadata in completed_links.items():
+        destination_root = Path(self.download_destination)
+
+        for link, download_info in completed_links.items():
+            metadata = download_info.get("metadata")
+            relative_album_path = download_info.get("relative_album_path")
+
+            if relative_album_path:
+                folder_path = destination_root / relative_album_path
+                if self.download_registry.register_if_folder_present(
+                    link,
+                    folder_path,
+                    metadata,
+                ):
+                    continue
+
             self.download_registry.register_if_present(
                 link,
-                self.download_destination,
+                destination_root,
                 metadata,
             )
 

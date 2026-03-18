@@ -90,16 +90,20 @@ class DownloadRegistry:
 
         return Path(destination_root) / artist / album
 
+    def register_if_folder_present(self, link, folder_path, metadata=None):
+        folder = Path(folder_path)
+        if not self._folder_has_files(folder):
+            return False
+
+        self.register(link, folder, metadata)
+        return True
+
     def register_if_present(self, link, destination_root, metadata):
         folder_path = self.resolve_folder_path(destination_root, metadata)
         if folder_path is None:
             return False
 
-        if not self._folder_has_files(folder_path):
-            return False
-
-        self.register(link, folder_path, metadata)
-        return True
+        return self.register_if_folder_present(link, folder_path, metadata)
 
     @staticmethod
     def _folder_has_files(folder):
