@@ -3,7 +3,7 @@ import re
 import requests
 
 
-def fetch_metadata(link):
+def fetch_metadata(link, retries=3, timeout=10):
     track_id, album_id = extract_ids(link)
 
     if track_id:
@@ -13,24 +13,28 @@ def fetch_metadata(link):
     else:
         return None
 
-    try:
-        response = requests.get(url, timeout=10)
-        data = response.json()
-        results = data.get("results") or []
+    for _ in range(max(retries, 1)):
+        try:
+            response = requests.get(url, timeout=timeout)
+            response.raise_for_status()
+            data = response.json()
+            results = data.get("results") or []
 
-        if not results:
-            return None
+            if not results:
+                continue
 
-        result = results[0]
-        return {
-            "artist": result.get("artistName"),
-            "track": result.get("trackName"),
-            "album": result.get("collectionName"),
-            "track_number": result.get("trackNumber"),
-            "track_count": result.get("trackCount"),
-        }
-    except Exception:
-        return None
+            result = results[0]
+            return {
+                "artist": result.get("artistName"),
+                "track": result.get("trackName"),
+                "album": result.get("collectionName"),
+                "track_number": result.get("trackNumber"),
+                "track_count": result.get("trackCount"),
+            }
+        except Exception:
+            continue
+
+    return None
 
 
 def extract_ids(link):

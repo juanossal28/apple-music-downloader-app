@@ -22,11 +22,13 @@ from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
+from core.download_registry import register_downloaded_link, should_skip_download
 from core.system_cleanup import clean_go_build_subfolders
 from core.paths import (
     get_project_root,
     get_amd_downloads_dir,
     get_download_destination_file,
+    get_download_registry_file,
 )
 
 
@@ -49,7 +51,10 @@ class MainWindow(QMainWindow):
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
+        self.task_items = {}
+        self.completed_download_items = []
         self.download_destination_file = get_download_destination_file()
+        self.download_registry_file = get_download_registry_file()
         self.download_destination = self.load_download_destination()
 
         self.emulator_state_timer = QTimer(self)
@@ -306,6 +311,8 @@ class MainWindow(QMainWindow):
             )
             return
 
+        self.completed_download_items.clear()
+
         for i in range(self.link_list.count()):
             link = self.link_list.item(i).text()
             metadata = fetch_metadata(link)
@@ -322,10 +329,16 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
-            if self._is_already_downloaded(metadata):
+            item = {
+                'link': link,
+                'title': title,
+                'metadata': metadata,
+            }
+
+            if self._should_skip_download(item):
                 continue
 
-            self.pending_downloads.append((link, title))
+            self.pending_downloads.append(item)
 
         if not self.pending_downloads:
             return
@@ -333,23 +346,33 @@ class MainWindow(QMainWindow):
         self.update_start_button_state()
         self._start_next_downloads()
 
+    def _should_skip_download(self, item):
+        return should_skip_download(
+            item['link'],
+            item['metadata'],
+            self.download_destination,
+            self.download_registry_file,
+            metadata_fetcher=fetch_metadata,
+        )
+
     def _start_next_downloads(self):
         while (
             len(self.active_tasks) < self.max_simultaneous_downloads
             and self.pending_downloads
         ):
-            link, title = self.pending_downloads.pop(0)
+            item = self.pending_downloads.pop(0)
 
-            widget = DownloadWidget(title)
+            widget = DownloadWidget(item['title'])
             self.download_layout.addWidget(widget)
 
-            task = DownloadTask(link, widget.log_signal, on_finished=None)
+            task = DownloadTask(item['link'], widget.log_signal, on_finished=None)
             task.on_finished = (
                 lambda success, current_task=task:
                 self.download_finished_signal.emit(current_task, success)
             )
 
             self.task_widgets[task] = widget
+            self.task_items[task] = item
             self.active_tasks.append(task)
             task.start()
 
@@ -358,6 +381,10 @@ class MainWindow(QMainWindow):
             self.active_tasks.remove(task)
 
         widget = self.task_widgets.pop(task, None)
+        item = self.task_items.pop(task, None)
+
+        if success and item:
+            self.completed_download_items.append(item)
 
         if success and widget:
             self.download_layout.removeWidget(widget)
@@ -367,6 +394,8 @@ class MainWindow(QMainWindow):
 
         if not self.active_tasks and not self.pending_downloads:
             self._move_completed_downloads()
+            self._register_completed_downloads()
+            self.completed_download_items.clear()
             self.update_start_button_state()
 
     def _move_completed_downloads(self):
@@ -383,6 +412,22 @@ class MainWindow(QMainWindow):
 
             try:
                 self._merge_or_move_dir(item, destination_root / item.name)
+            except Exception:
+                continue
+
+    def _register_completed_downloads(self):
+        if not self.download_destination:
+            return
+
+        for item in self.completed_download_items:
+            try:
+                register_downloaded_link(
+                    item['link'],
+                    item['metadata'],
+                    self.download_destination,
+                    self.download_registry_file,
+                    metadata_fetcher=fetch_metadata,
+                )
             except Exception:
                 continue
 
@@ -403,22 +448,6 @@ class MainWindow(QMainWindow):
             src_dir.rmdir()
         except OSError:
             pass
-
-    def _is_already_downloaded(self, metadata):
-        if not metadata or not self.download_destination:
-            return False
-
-        artist = metadata.get("artist")
-        album = metadata.get("album")
-
-        if not artist or not album:
-            return False
-
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
-            return False
-
-        return any(path.is_file() for path in album_path.rglob("*"))
 
     def start_emulator(self):
         self.emulator.start()
@@ -460,12 +489,14 @@ class MainWindow(QMainWindow):
 
     def _cancel_all_tasks(self):
         self.pending_downloads.clear()
+        self.completed_download_items.clear()
 
         for task in list(self.active_tasks):
             task.cancel()
 
         self.active_tasks.clear()
         self.task_widgets.clear()
+        self.task_items.clear()
 
     def _clear_download_widgets(self):
         while self.download_layout.count():
