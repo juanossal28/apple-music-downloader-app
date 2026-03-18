@@ -7,11 +7,15 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QLabel,
-    QListWidget
+    QListWidget,
+    QFileDialog,
+    QMessageBox
 )
 import threading
-
+import shutil
+import json
 from pathlib import Path
+
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
 from core.emulator import EmulatorManager
@@ -20,6 +24,12 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
+from core.paths import (
+    get_project_root,
+    get_amd_downloads_dir,
+    get_download_destination_file,
+    get_download_registry_file,
+)
 
 
 class MainWindow(QMainWindow):
@@ -44,12 +54,19 @@ class MainWindow(QMainWindow):
         self.emulator = EmulatorManager()
         self.frida = FridaManager()
 
-        self.links_file = Path("data/links.txt")
+        self.links_file = get_project_root() / "data" / "links.txt"
 
         self.max_simultaneous_downloads = 3
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
+        self.task_links = {}
+        self.task_metadata = {}
+        self.completed_successful = []
+        self.download_destination_file = get_download_destination_file()
+        self.download_registry_file = get_download_registry_file()
+        self.download_destination = self.load_download_destination()
+        self.download_registry = self.load_download_registry()
 
         self.emulator_state_timer = QTimer(self)
         self.emulator_state_timer.setInterval(1500)
@@ -147,11 +164,21 @@ class MainWindow(QMainWindow):
         self.start_button = QPushButton("Start Downloads")
         buttons_row.addWidget(self.start_button)
 
+        self.select_destination_button = QPushButton("Select Folder")
+        buttons_row.addWidget(self.select_destination_button)
+
         self.clear_button = QPushButton("Clear")
         self.clear_button.setStyleSheet("background-color: #c0392b; color: white;")
         buttons_row.addWidget(self.clear_button)
 
         col_right.addLayout(buttons_row)
+
+        self.destination_label = QLabel(
+            self._format_destination_label(self.download_destination)
+        )
+        self.destination_label.setWordWrap(True)
+        self.destination_label.setStyleSheet("color: #7f8c8d;")
+        col_right.addWidget(self.destination_label)
 
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
@@ -181,6 +208,7 @@ class MainWindow(QMainWindow):
         self.clipboard_button.clicked.connect(self.add_from_clipboard)
         self.remove_button.clicked.connect(self.remove_link)
         self.start_button.clicked.connect(self.start_downloads)
+        self.select_destination_button.clicked.connect(self.select_download_destination)
         self.clear_button.clicked.connect(self.clear_downloads)
         self.download_finished_signal.connect(self._on_task_finished)
 
@@ -188,6 +216,52 @@ class MainWindow(QMainWindow):
         self.emulator_state_timer.start()
 
         self.load_links()
+
+    # -------------------------
+
+    def _format_destination_label(self, destination):
+        if destination:
+            return f"Destination: {destination}"
+        return "Destination: not selected"
+
+    def load_download_destination(self):
+        if not self.download_destination_file.exists():
+            return None
+
+        destination = self.download_destination_file.read_text(encoding="utf-8").strip()
+        return destination or None
+
+    def save_download_destination(self, destination):
+        self.download_destination_file.write_text(destination, encoding="utf-8")
+
+    def load_download_registry(self):
+        if not self.download_registry_file.exists():
+            return {}
+
+        try:
+            return json.loads(self.download_registry_file.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+
+    def save_download_registry(self):
+        self.download_registry_file.write_text(
+            json.dumps(self.download_registry, ensure_ascii=False, indent=2),
+            encoding="utf-8"
+        )
+
+    def select_download_destination(self):
+        selected = QFileDialog.getExistingDirectory(
+            self,
+            "Select folder for completed downloads",
+            self.download_destination or str(get_project_root())
+        )
+
+        if not selected:
+            return
+
+        self.download_destination = selected
+        self.save_download_destination(selected)
+        self.destination_label.setText(self._format_destination_label(selected))
 
     # -------------------------
 
@@ -309,6 +383,14 @@ class MainWindow(QMainWindow):
         if self.active_tasks or self.pending_downloads:
             return
 
+        if not self.download_destination or not Path(self.download_destination).exists():
+            QMessageBox.warning(
+                self,
+                "Destination required",
+                "Select a destination folder before starting downloads."
+            )
+            return
+
         for i in range(self.link_list.count()):
 
             link = self.link_list.item(i).text()
@@ -330,7 +412,10 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
-            self.pending_downloads.append((link, title))
+            if self._is_already_downloaded(link, metadata):
+                continue
+
+            self.pending_downloads.append((link, title, metadata))
 
         if not self.pending_downloads:
             return
@@ -346,7 +431,7 @@ class MainWindow(QMainWindow):
             len(self.active_tasks) < self.max_simultaneous_downloads
             and self.pending_downloads
         ):
-            link, title = self.pending_downloads.pop(0)
+            link, title, metadata = self.pending_downloads.pop(0)
 
             widget = DownloadWidget(title)
             self.download_layout.addWidget(widget)
@@ -363,6 +448,8 @@ class MainWindow(QMainWindow):
             )
 
             self.task_widgets[task] = widget
+            self.task_links[task] = link
+            self.task_metadata[task] = metadata
             self.active_tasks.append(task)
             task.start()
 
@@ -374,6 +461,11 @@ class MainWindow(QMainWindow):
             self.active_tasks.remove(task)
 
         widget = self.task_widgets.pop(task, None)
+        link = self.task_links.pop(task, None)
+        metadata = self.task_metadata.pop(task, None)
+
+        if success and link:
+            self.completed_successful.append((link, metadata))
 
         if success and widget:
             self.download_layout.removeWidget(widget)
@@ -382,7 +474,118 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
         if not self.active_tasks and not self.pending_downloads:
+            self._move_completed_downloads()
+            self._update_download_registry()
             self.update_start_button_state()
+
+    def _move_completed_downloads(self):
+
+        source_root = get_amd_downloads_dir()
+
+        if not source_root.exists() or not self.download_destination:
+            return
+
+        destination_root = Path(self.download_destination)
+        destination_root.mkdir(parents=True, exist_ok=True)
+
+        for item in source_root.iterdir():
+
+            if not item.is_dir():
+                continue
+
+            try:
+                self._merge_or_move_dir(item, destination_root / item.name)
+            except Exception:
+                continue
+
+    def _merge_or_move_dir(self, src_dir, dst_dir):
+
+        if not dst_dir.exists():
+            shutil.move(str(src_dir), str(dst_dir))
+            return
+
+        for child in src_dir.iterdir():
+            dst_child = dst_dir / child.name
+
+            if child.is_dir():
+                self._merge_or_move_dir(child, dst_child)
+            else:
+                if not dst_child.exists():
+                    shutil.move(str(child), str(dst_child))
+                else:
+                    try:
+                        child.unlink()
+                    except FileNotFoundError:
+                        pass
+
+        try:
+            src_dir.rmdir()
+        except OSError:
+            pass
+
+    def _is_already_downloaded(self, link, metadata):
+
+        if self._is_download_record_valid(link):
+            return True
+
+        if not metadata or not self.download_destination:
+            return False
+
+        artist = metadata.get("artist")
+        album = metadata.get("album")
+
+        if not artist or not album:
+            return False
+
+        album_path = Path(self.download_destination) / artist / album
+
+        if not album_path.exists() or not album_path.is_dir():
+            return False
+
+        return any(p.is_file() for p in album_path.rglob("*"))
+
+    def _is_download_record_valid(self, link):
+        if not self.download_destination:
+            return False
+
+        relative = self.download_registry.get(link)
+
+        if not relative:
+            return False
+
+        target = Path(self.download_destination) / relative
+        return target.exists() and target.is_dir() and any(p.is_file() for p in target.rglob("*"))
+
+    def _update_download_registry(self):
+        if not self.completed_successful or not self.download_destination:
+            self.completed_successful.clear()
+            return
+
+        for link, metadata in self.completed_successful:
+            relative = self._metadata_to_relative_album_path(metadata)
+
+            if not relative:
+                continue
+
+            target = Path(self.download_destination) / relative
+
+            if target.exists() and target.is_dir() and any(p.is_file() for p in target.rglob("*")):
+                self.download_registry[link] = relative
+
+        self.completed_successful.clear()
+        self.save_download_registry()
+
+    def _metadata_to_relative_album_path(self, metadata):
+        if not metadata:
+            return None
+
+        artist = metadata.get("artist")
+        album = metadata.get("album")
+
+        if not artist or not album:
+            return None
+
+        return f"{artist}/{album}"
 
     # -------------------------
 
@@ -445,6 +648,9 @@ class MainWindow(QMainWindow):
 
         self.active_tasks.clear()
         self.task_widgets.clear()
+        self.task_links.clear()
+        self.task_metadata.clear()
+        self.completed_successful.clear()
 
         while self.download_layout.count():
             item = self.download_layout.takeAt(0)
@@ -464,6 +670,9 @@ class MainWindow(QMainWindow):
 
         self.active_tasks.clear()
         self.task_widgets.clear()
+        self.task_links.clear()
+        self.task_metadata.clear()
+        self.completed_successful.clear()
 
         try:
             self.frida.stop_agent()
