@@ -56,7 +56,8 @@ class MainWindow(QMainWindow):
 
         self.links_file = get_project_root() / "data" / "links.txt"
 
-        self.max_simultaneous_downloads = 3
+        # Se ejecuta en serie para mover correctamente cada carpeta al finalizar.
+        self.max_simultaneous_downloads = 1
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
@@ -479,6 +480,7 @@ class MainWindow(QMainWindow):
             self.completed_successful.append((link, metadata))
 
         if success and widget:
+            self._move_completed_downloads()
             self.download_layout.removeWidget(widget)
             widget.deleteLater()
 
