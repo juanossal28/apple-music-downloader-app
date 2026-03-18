@@ -23,6 +23,7 @@ from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
 from core.apple_music_api import fetch_metadata
 from core.system_cleanup import clean_go_build_subfolders
+from core.download_registry import DownloadRegistry
 from core.paths import (
     get_project_root,
     get_amd_downloads_dir,
@@ -44,13 +45,15 @@ class MainWindow(QMainWindow):
 
         self.links_file = get_project_root() / "data" / "links.txt"
 
-        # Permitimos hasta 3 descargas simultáneas y movemos carpetas solo al finalizar el lote.
-        self.max_simultaneous_downloads = 3
+        # Procesamos una descarga a la vez para mover y registrar cada enlace de forma atómica.
+        self.max_simultaneous_downloads = 1
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
         self.download_destination_file = get_download_destination_file()
         self.download_destination = self.load_download_destination()
+        self.download_registry = DownloadRegistry()
+        self.completed_download_links = {}
 
         self.emulator_state_timer = QTimer(self)
         self.emulator_state_timer.setInterval(1500)
@@ -306,6 +309,8 @@ class MainWindow(QMainWindow):
             )
             return
 
+        skipped_links = []
+
         for i in range(self.link_list.count()):
             link = self.link_list.item(i).text()
             metadata = fetch_metadata(link)
@@ -322,10 +327,24 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
-            if self._is_already_downloaded(metadata):
+            if self._is_link_download_blocked(link):
+                skipped_links.append(link)
                 continue
 
-            self.pending_downloads.append((link, title))
+            self.pending_downloads.append((link, title, metadata))
+
+        if skipped_links:
+            skipped_count = len(skipped_links)
+            detail = "\n".join(skipped_links[:10])
+            if skipped_count > 10:
+                detail += f"\n... y {skipped_count - 10} enlace(s) más."
+
+            QMessageBox.information(
+                self,
+                "Enlaces ya descargados",
+                "Se omitieron enlaces que ya habían sido descargados y aún existen en la carpeta de destino configurada.\n\n"
+                f"{detail}",
+            )
 
         if not self.pending_downloads:
             return
@@ -338,12 +357,13 @@ class MainWindow(QMainWindow):
             len(self.active_tasks) < self.max_simultaneous_downloads
             and self.pending_downloads
         ):
-            link, title = self.pending_downloads.pop(0)
+            link, title, metadata = self.pending_downloads.pop(0)
 
             widget = DownloadWidget(title)
             self.download_layout.addWidget(widget)
 
             task = DownloadTask(link, widget.log_signal, on_finished=None)
+            task.metadata = metadata
             task.on_finished = (
                 lambda success, current_task=task:
                 self.download_finished_signal.emit(current_task, success)
@@ -359,6 +379,13 @@ class MainWindow(QMainWindow):
 
         widget = self.task_widgets.pop(task, None)
 
+        if success:
+            self.completed_download_links[task.link] = {
+                "metadata": getattr(task, "metadata", None),
+                "relative_album_path": getattr(task, "relative_album_path", None),
+            }
+            self._move_completed_downloads()
+
         if success and widget:
             self.download_layout.removeWidget(widget)
             widget.deleteLater()
@@ -366,12 +393,16 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
         if not self.active_tasks and not self.pending_downloads:
-            self._move_completed_downloads()
             self.update_start_button_state()
 
     def _move_completed_downloads(self):
+        if not self.download_destination:
+            self.completed_download_links.clear()
+            return
+
         source_root = get_amd_downloads_dir()
-        if not source_root.exists() or not self.download_destination:
+        if not source_root.exists():
+            self.completed_download_links.clear()
             return
 
         destination_root = Path(self.download_destination)
@@ -385,6 +416,8 @@ class MainWindow(QMainWindow):
                 self._merge_or_move_dir(item, destination_root / item.name)
             except Exception:
                 continue
+
+        self._register_completed_downloads()
 
     def _merge_or_move_dir(self, src_dir, dst_dir):
         if not dst_dir.exists():
@@ -404,21 +437,36 @@ class MainWindow(QMainWindow):
         except OSError:
             pass
 
-    def _is_already_downloaded(self, metadata):
-        if not metadata or not self.download_destination:
-            return False
+    def _register_completed_downloads(self):
+        if not self.completed_download_links:
+            return
 
-        artist = metadata.get("artist")
-        album = metadata.get("album")
+        completed_links = dict(self.completed_download_links)
+        self.completed_download_links.clear()
 
-        if not artist or not album:
-            return False
+        destination_root = Path(self.download_destination)
 
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
-            return False
+        for link, download_info in completed_links.items():
+            metadata = download_info.get("metadata")
+            relative_album_path = download_info.get("relative_album_path")
 
-        return any(path.is_file() for path in album_path.rglob("*"))
+            if relative_album_path:
+                folder_path = destination_root / relative_album_path
+                if self.download_registry.register_if_folder_present(
+                    link,
+                    folder_path,
+                    metadata,
+                ):
+                    continue
+
+            self.download_registry.register_if_present(
+                link,
+                destination_root,
+                metadata,
+            )
+
+    def _is_link_download_blocked(self, link):
+        return not self.download_registry.is_download_available(link)
 
     def start_emulator(self):
         self.emulator.start()

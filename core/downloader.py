@@ -2,18 +2,41 @@ import os
 import signal
 import subprocess
 import threading
+from pathlib import Path
 
 from core.paths import get_amd_workdir
 
 
 class DownloadTask:
     MAX_RETRIES = 3
+    _CAPTURE_PREFIXES = ("Song->", "Album->", "Playlist->", "Station->")
+    _NON_FOLDER_PREFIXES = (
+        "Queue ",
+        "Track ",
+        "Audio:",
+        "Video:",
+        "Downloading",
+        "Decrypting",
+        "MV ",
+        "Found ",
+        "Animation ",
+        "Animated ",
+        "Connected ",
+        "Invalid ",
+        "Failed ",
+        "Error",
+        "Start trying again",
+        "=======",
+    )
 
     def __init__(self, link, log_callback, on_finished=None):
         self.link = link
         self.log_callback = log_callback
         self.on_finished = on_finished
         self.process = None
+        self.relative_album_path = None
+        self._artist_folder_name = None
+        self._album_folder_name = None
         self._cancel_requested = False
         self._lock = threading.Lock()
 
@@ -76,6 +99,7 @@ class DownloadTask:
                     pass
                 continue
 
+            self._capture_output_folder(clean_line)
             self.log_callback.emit(clean_line)
 
             if "press Enter to try again" in clean_line:
@@ -98,6 +122,57 @@ class DownloadTask:
 
         process.wait()
         self._finish(process)
+
+    def _capture_output_folder(self, clean_line):
+        if self.relative_album_path is not None:
+            return
+
+        artist_name = self._extract_prefixed_name(clean_line)
+        if artist_name:
+            self._artist_folder_name = artist_name
+            self._update_relative_album_path()
+            return
+
+        if not self._looks_like_folder_name(clean_line):
+            return
+
+        if self._artist_folder_name is None:
+            self._artist_folder_name = clean_line
+        elif self._album_folder_name is None:
+            self._album_folder_name = clean_line
+
+        self._update_relative_album_path()
+
+    def _extract_prefixed_name(self, clean_line):
+        for prefix in self._CAPTURE_PREFIXES:
+            if prefix not in clean_line:
+                continue
+
+            name = clean_line.split(prefix, 1)[1].strip()
+            return name or None
+
+        return None
+
+    def _looks_like_folder_name(self, clean_line):
+        if not clean_line:
+            return False
+
+        if clean_line.startswith(self._NON_FOLDER_PREFIXES):
+            return False
+
+        if "%" in clean_line or "press Enter to try again" in clean_line:
+            return False
+
+        return True
+
+    def _update_relative_album_path(self):
+        if not self._artist_folder_name or not self._album_folder_name:
+            return
+
+        self.relative_album_path = Path(
+            self._artist_folder_name,
+            self._album_folder_name,
+        )
 
     def _finish(self, process):
         success = (not self._cancel_requested) and process.returncode == 0
