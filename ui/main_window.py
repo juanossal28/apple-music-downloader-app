@@ -468,19 +468,58 @@ class MainWindow(QMainWindow):
 
         return Path(self.download_destination) / artist / album
 
+    def _folder_contains_files(self, folder_path):
+        return folder_path.exists() and folder_path.is_dir() and any(
+            path.is_file() for path in folder_path.rglob("*")
+        )
+
+    def _find_destination_album_path(self, metadata):
+        album_path = self._get_destination_album_path(metadata)
+        if album_path and self._folder_contains_files(album_path):
+            return album_path
+
+        if not metadata or not self.download_destination:
+            return None
+
+        artist = sanitize_download_component(metadata.get("artist"))
+        album = sanitize_download_component(metadata.get("album"))
+        if not artist or not album:
+            return None
+
+        artist_dir = Path(self.download_destination) / artist
+        candidate_dirs = []
+
+        if artist_dir.exists() and artist_dir.is_dir():
+            candidate_dirs.extend(
+                path
+                for path in artist_dir.iterdir()
+                if path.is_dir() and album.lower() in path.name.lower()
+            )
+
+        if not candidate_dirs:
+            destination_root = Path(self.download_destination)
+            candidate_dirs.extend(
+                path
+                for path in destination_root.rglob("*")
+                if path.is_dir() and album.lower() in path.name.lower()
+            )
+
+        for candidate in candidate_dirs:
+            if self._folder_contains_files(candidate):
+                return candidate
+
+        return None
+
     def _is_already_downloaded(self, link, metadata, download_key):
         if self.download_registry.is_downloaded(download_key):
             return True
 
-        album_path = self._get_destination_album_path(metadata)
-        if not album_path or not album_path.exists() or not album_path.is_dir():
+        album_path = self._find_destination_album_path(metadata)
+        if not album_path:
             return False
 
-        has_files = any(path.is_file() for path in album_path.rglob("*"))
-        if has_files:
-            self.download_registry.mark_downloaded(download_key, link, album_path, metadata)
-
-        return has_files
+        self.download_registry.mark_downloaded(download_key, link, album_path, metadata)
+        return True
 
     def _register_completed_downloads(self):
         if not self.completed_downloads:
@@ -492,15 +531,12 @@ class MainWindow(QMainWindow):
             metadata = completed.get("metadata")
             download_key = completed.get("download_key")
             link = completed.get("link")
-            album_path = self._get_destination_album_path(metadata)
+            album_path = self._find_destination_album_path(metadata)
 
             if not download_key or not album_path:
                 continue
 
-            if album_path.exists() and album_path.is_dir() and any(
-                path.is_file() for path in album_path.rglob("*")
-            ):
-                pending_registry_updates.append((download_key, link, album_path, metadata))
+            pending_registry_updates.append((download_key, link, album_path, metadata))
 
         for download_key, link, album_path, metadata in pending_registry_updates:
             self.download_registry.mark_downloaded(download_key, link, album_path, metadata)
