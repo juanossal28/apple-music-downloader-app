@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 import threading
 import shutil
 from pathlib import Path
+import re
 
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
@@ -473,35 +474,59 @@ class MainWindow(QMainWindow):
             path.is_file() for path in folder_path.rglob("*")
         )
 
-    def _find_destination_album_path(self, metadata):
+    def _extract_album_hint_from_link(self, link):
+        if not link:
+            return None
+
+        match = re.search(r"/album/([^/?]+)/", link)
+        if not match:
+            return None
+
+        return sanitize_download_component(match.group(1).replace("-", " ").strip())
+
+    def _find_destination_album_path(self, link, metadata):
         album_path = self._get_destination_album_path(metadata)
         if album_path and self._folder_contains_files(album_path):
             return album_path
 
-        if not metadata or not self.download_destination:
+        if not self.download_destination:
             return None
 
-        artist = sanitize_download_component(metadata.get("artist"))
-        album = sanitize_download_component(metadata.get("album"))
-        if not artist or not album:
+        artist = None
+        album_tokens = []
+
+        if metadata:
+            artist = sanitize_download_component(metadata.get("artist"))
+            album = sanitize_download_component(metadata.get("album"))
+            if album:
+                album_tokens.append(album.lower())
+
+        album_hint = self._extract_album_hint_from_link(link)
+        if album_hint:
+            album_tokens.append(album_hint.lower())
+
+        album_tokens = [token for token in dict.fromkeys(album_tokens) if token]
+        if not album_tokens:
             return None
 
-        artist_dir = Path(self.download_destination) / artist
         candidate_dirs = []
-
-        if artist_dir.exists() and artist_dir.is_dir():
-            candidate_dirs.extend(
-                path
-                for path in artist_dir.iterdir()
-                if path.is_dir() and album.lower() in path.name.lower()
-            )
+        if artist:
+            artist_dir = Path(self.download_destination) / artist
+            if artist_dir.exists() and artist_dir.is_dir():
+                candidate_dirs.extend(
+                    path
+                    for path in artist_dir.iterdir()
+                    if path.is_dir()
+                    and any(token in path.name.lower() for token in album_tokens)
+                )
 
         if not candidate_dirs:
             destination_root = Path(self.download_destination)
             candidate_dirs.extend(
                 path
                 for path in destination_root.rglob("*")
-                if path.is_dir() and album.lower() in path.name.lower()
+                if path.is_dir()
+                and any(token in path.name.lower() for token in album_tokens)
             )
 
         for candidate in candidate_dirs:
@@ -514,7 +539,7 @@ class MainWindow(QMainWindow):
         if self.download_registry.is_downloaded(download_key):
             return True
 
-        album_path = self._find_destination_album_path(metadata)
+        album_path = self._find_destination_album_path(link, metadata)
         if not album_path:
             return False
 
@@ -531,7 +556,7 @@ class MainWindow(QMainWindow):
             metadata = completed.get("metadata")
             download_key = completed.get("download_key")
             link = completed.get("link")
-            album_path = self._find_destination_album_path(metadata)
+            album_path = self._find_destination_album_path(link, metadata)
 
             if not download_key or not album_path:
                 continue
