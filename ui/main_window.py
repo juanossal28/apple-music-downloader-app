@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 import threading
 import shutil
 from pathlib import Path
+import re
 
 from core.downloader import DownloadTask
 from ui.download_widget import DownloadWidget
@@ -21,13 +22,20 @@ from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
-from core.apple_music_api import fetch_metadata
+from core.apple_music_api import (
+    fetch_metadata,
+    extract_ids,
+    sanitize_download_component,
+    normalize_download_component,
+)
 from core.system_cleanup import clean_go_build_subfolders
 from core.paths import (
     get_project_root,
     get_amd_downloads_dir,
     get_download_destination_file,
+    get_download_registry_file,
 )
+from core.download_registry import DownloadRegistry
 
 
 class MainWindow(QMainWindow):
@@ -44,13 +52,14 @@ class MainWindow(QMainWindow):
 
         self.links_file = get_project_root() / "data" / "links.txt"
 
-        # Permitimos hasta 3 descargas simultáneas y movemos carpetas solo al finalizar el lote.
-        self.max_simultaneous_downloads = 3
+        # Movemos carpetas solo al finalizar el lote de descargas.
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
         self.download_destination_file = get_download_destination_file()
         self.download_destination = self.load_download_destination()
+        self.download_registry = DownloadRegistry(get_download_registry_file())
+        self.completed_downloads = []
 
         self.emulator_state_timer = QTimer(self)
         self.emulator_state_timer.setInterval(1500)
@@ -306,9 +315,18 @@ class MainWindow(QMainWindow):
             )
             return
 
+        queued_keys = set()
+        active_keys = {
+            task.download_key
+            for task in self.active_tasks
+            if getattr(task, "download_key", None)
+        }
+        skipped_duplicates = []
+
         for i in range(self.link_list.count()):
             link = self.link_list.item(i).text()
             metadata = fetch_metadata(link)
+            download_key = self._build_download_key(link, metadata)
 
             if metadata:
                 track_name = metadata.get("track")
@@ -322,10 +340,25 @@ class MainWindow(QMainWindow):
             else:
                 title = link
 
-            if self._is_already_downloaded(metadata):
+            if (
+                download_key in queued_keys
+                or download_key in active_keys
+                or self._is_already_downloaded(link, metadata, download_key)
+            ):
+                skipped_duplicates.append(link)
                 continue
 
-            self.pending_downloads.append((link, title))
+            queued_keys.add(download_key)
+            self.pending_downloads.append((link, title, metadata, download_key))
+
+        if skipped_duplicates:
+            QMessageBox.information(
+                self,
+                "Duplicate downloads skipped",
+                "These links were skipped because they are already queued, "
+                "being downloaded, or registered as completed:\n\n"
+                + "\n".join(skipped_duplicates),
+            )
 
         if not self.pending_downloads:
             return
@@ -334,16 +367,15 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
     def _start_next_downloads(self):
-        while (
-            len(self.active_tasks) < self.max_simultaneous_downloads
-            and self.pending_downloads
-        ):
-            link, title = self.pending_downloads.pop(0)
+        while self.pending_downloads:
+            link, title, metadata, download_key = self.pending_downloads.pop(0)
 
             widget = DownloadWidget(title)
             self.download_layout.addWidget(widget)
 
             task = DownloadTask(link, widget.log_signal, on_finished=None)
+            task.download_metadata = metadata
+            task.download_key = download_key
             task.on_finished = (
                 lambda success, current_task=task:
                 self.download_finished_signal.emit(current_task, success)
@@ -358,6 +390,15 @@ class MainWindow(QMainWindow):
             self.active_tasks.remove(task)
 
         widget = self.task_widgets.pop(task, None)
+
+        if success:
+            self.completed_downloads.append(
+                {
+                    "link": task.link,
+                    "metadata": getattr(task, "download_metadata", None),
+                    "download_key": getattr(task, "download_key", None),
+                }
+            )
 
         if success and widget:
             self.download_layout.removeWidget(widget)
@@ -386,6 +427,8 @@ class MainWindow(QMainWindow):
             except Exception:
                 continue
 
+        self._register_completed_downloads()
+
     def _merge_or_move_dir(self, src_dir, dst_dir):
         if not dst_dir.exists():
             shutil.move(str(src_dir), str(dst_dir))
@@ -404,21 +447,133 @@ class MainWindow(QMainWindow):
         except OSError:
             pass
 
-    def _is_already_downloaded(self, metadata):
-        if not metadata or not self.download_destination:
-            return False
+    def _build_download_key(self, link, metadata):
+        track_id, album_id = extract_ids(link)
 
-        artist = metadata.get("artist")
-        album = metadata.get("album")
+        if track_id:
+            return f"track:{track_id}"
+        if album_id:
+            return f"album:{album_id}"
+
+        normalized_link = link.strip().rstrip("/")
+        return f"link:{normalized_link}"
+
+    def _get_destination_album_path(self, metadata):
+        if not metadata or not self.download_destination:
+            return None
+
+        artist = sanitize_download_component(metadata.get("artist"))
+        album = sanitize_download_component(metadata.get("album"))
 
         if not artist or not album:
+            return None
+
+        return Path(self.download_destination) / artist / album
+
+    def _folder_contains_files(self, folder_path):
+        return folder_path.exists() and folder_path.is_dir() and any(
+            path.is_file() for path in folder_path.rglob("*")
+        )
+
+    def _extract_album_hint_from_link(self, link):
+        if not link:
+            return None
+
+        match = re.search(r"/album/([^/?]+)/", link)
+        if not match:
+            return None
+
+        return normalize_download_component(match.group(1).replace("-", " ").strip())
+
+    def _find_destination_album_path(self, link, metadata):
+        album_path = self._get_destination_album_path(metadata)
+        if album_path and self._folder_contains_files(album_path):
+            return album_path
+
+        if not self.download_destination:
+            return None
+
+        artist = None
+        album_tokens = []
+
+        if metadata:
+            artist = sanitize_download_component(metadata.get("artist"))
+            album = sanitize_download_component(metadata.get("album"))
+            if album:
+                album_tokens.append(normalize_download_component(album))
+
+        album_hint = self._extract_album_hint_from_link(link)
+        if album_hint:
+            album_tokens.append(album_hint)
+
+        album_tokens = [token for token in dict.fromkeys(album_tokens) if token]
+        if not album_tokens:
+            return None
+
+        candidate_dirs = []
+        if artist:
+            artist_dir = Path(self.download_destination) / artist
+            if artist_dir.exists() and artist_dir.is_dir():
+                candidate_dirs.extend(
+                    path
+                    for path in artist_dir.iterdir()
+                    if path.is_dir()
+                    and any(
+                        token in normalize_download_component(path.name)
+                        for token in album_tokens
+                    )
+                )
+
+        if not candidate_dirs:
+            destination_root = Path(self.download_destination)
+            candidate_dirs.extend(
+                path
+                for path in destination_root.rglob("*")
+                if path.is_dir()
+                and any(
+                    token in normalize_download_component(path.name)
+                    for token in album_tokens
+                )
+            )
+
+        for candidate in candidate_dirs:
+            if self._folder_contains_files(candidate):
+                return candidate
+
+        return None
+
+    def _is_already_downloaded(self, link, metadata, download_key):
+        if self.download_registry.is_downloaded(download_key):
+            return True
+
+        album_path = self._find_destination_album_path(link, metadata)
+        if not album_path:
             return False
 
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
-            return False
+        self.download_registry.mark_downloaded(download_key, link, album_path, metadata)
+        return True
 
-        return any(path.is_file() for path in album_path.rglob("*"))
+    def _register_completed_downloads(self):
+        if not self.completed_downloads:
+            return
+
+        pending_registry_updates = []
+
+        for completed in self.completed_downloads:
+            metadata = completed.get("metadata")
+            download_key = completed.get("download_key")
+            link = completed.get("link")
+            album_path = self._find_destination_album_path(link, metadata)
+
+            if not download_key or not album_path:
+                continue
+
+            pending_registry_updates.append((download_key, link, album_path, metadata))
+
+        for download_key, link, album_path, metadata in pending_registry_updates:
+            self.download_registry.mark_downloaded(download_key, link, album_path, metadata)
+
+        self.completed_downloads.clear()
 
     def start_emulator(self):
         self.emulator.start()

@@ -3,6 +3,9 @@ import re
 import requests
 
 
+FORBIDDEN_PATH_CHARS = re.compile(r'[/\\<>:"|?*]')
+
+
 def fetch_metadata(link):
     track_id, album_id = extract_ids(link)
 
@@ -46,3 +49,20 @@ def extract_ids(link):
         album_id = album_match.group(1)
 
     return track_id, album_id
+
+
+def sanitize_download_component(value):
+    if not value:
+        return value
+
+    return FORBIDDEN_PATH_CHARS.sub("_", value).strip()
+
+
+def normalize_download_component(value):
+    sanitized = sanitize_download_component(value)
+    if not sanitized:
+        return sanitized
+
+    return " ".join(
+        sanitized.lower().replace("_", " ").replace("-", " ").split()
+    )
