@@ -13,6 +13,8 @@ from PySide6.QtWidgets import (
 )
 import threading
 import shutil
+import re
+import unicodedata
 from pathlib import Path
 
 from core.downloader import DownloadTask
@@ -404,21 +406,90 @@ class MainWindow(QMainWindow):
         except OSError:
             pass
 
+    def _sanitize_fs_name(self, value):
+        if not value:
+            return ""
+
+        sanitized = re.sub(r'[<>:"/\\|?*]', "_", str(value)).strip()
+        return sanitized.rstrip(". ")
+
+    def _normalize_name(self, value):
+        if not value:
+            return ""
+
+        normalized = unicodedata.normalize("NFKD", str(value))
+        normalized = "".join(
+            char for char in normalized if not unicodedata.combining(char)
+        )
+        normalized = self._sanitize_fs_name(normalized).casefold()
+        return re.sub(r'[^a-z0-9]+', "", normalized)
+
+    def _iter_matching_dirs(self, parent_dir, expected_name):
+        if not parent_dir.exists() or not parent_dir.is_dir() or not expected_name:
+            return []
+
+        expected_normalized = self._normalize_name(expected_name)
+        matches = []
+
+        for child in parent_dir.iterdir():
+            if not child.is_dir():
+                continue
+
+            child_normalized = self._normalize_name(child.name)
+            if child_normalized == expected_normalized:
+                matches.append(child)
+
+        return matches
+
+    def _album_contains_track(self, album_path, track_name):
+        media_extensions = {".m4a", ".mp4", ".flac", ".alac", ".aac", ".wav", ".mp3"}
+        track_normalized = self._normalize_name(track_name)
+
+        for path in album_path.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in media_extensions:
+                continue
+
+            if not track_normalized:
+                return True
+
+            if track_normalized in self._normalize_name(path.stem):
+                return True
+
+        return False
+
     def _is_already_downloaded(self, metadata):
         if not metadata or not self.download_destination:
             return False
 
         artist = metadata.get("artist")
         album = metadata.get("album")
+        track = metadata.get("track")
 
         if not artist or not album:
             return False
 
-        album_path = Path(self.download_destination) / artist / album
-        if not album_path.exists() or not album_path.is_dir():
+        destination_root = Path(self.download_destination)
+        if not destination_root.exists() or not destination_root.is_dir():
             return False
 
-        return any(path.is_file() for path in album_path.rglob("*"))
+        artist_dirs = self._iter_matching_dirs(destination_root, artist)
+        if not artist_dirs:
+            fallback_artist_dir = destination_root / self._sanitize_fs_name(artist)
+            if fallback_artist_dir.exists() and fallback_artist_dir.is_dir():
+                artist_dirs = [fallback_artist_dir]
+
+        for artist_dir in artist_dirs:
+            album_dirs = self._iter_matching_dirs(artist_dir, album)
+            if not album_dirs:
+                fallback_album_dir = artist_dir / self._sanitize_fs_name(album)
+                if fallback_album_dir.exists() and fallback_album_dir.is_dir():
+                    album_dirs = [fallback_album_dir]
+
+            for album_dir in album_dirs:
+                if self._album_contains_track(album_dir, track):
+                    return True
+
+        return False
 
     def start_emulator(self):
         self.emulator.start()
