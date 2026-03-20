@@ -21,7 +21,11 @@ from core.emulator import EmulatorManager
 from core.frida_manager import FridaManager
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Signal, Qt, QTimer
-from core.apple_music_api import fetch_metadata, extract_ids
+from core.apple_music_api import (
+    fetch_metadata,
+    extract_ids,
+    sanitize_download_component,
+)
 from core.system_cleanup import clean_go_build_subfolders
 from core.paths import (
     get_project_root,
@@ -460,8 +464,8 @@ class MainWindow(QMainWindow):
         if not metadata or not self.download_destination:
             return None
 
-        artist = metadata.get("artist")
-        album = metadata.get("album")
+        artist = sanitize_download_component(metadata.get("artist"))
+        album = sanitize_download_component(metadata.get("album"))
 
         if not artist or not album:
             return None
