@@ -25,3 +25,8 @@ def get_amd_downloads_dir() -> Path:
 def get_download_destination_file() -> Path:
     """Return the settings file that stores the user-selected destination path."""
     return get_project_root() / "data" / "download_destination.txt"
+
+
+def get_download_registry_file() -> Path:
+    """Return the persistent registry used to prevent duplicate downloads."""
+    return get_project_root() / "data" / "download_registry.json"
