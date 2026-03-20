@@ -50,8 +50,7 @@ class MainWindow(QMainWindow):
 
         self.links_file = get_project_root() / "data" / "links.txt"
 
-        # Permitimos hasta 3 descargas simultáneas y movemos carpetas solo al finalizar el lote.
-        self.max_simultaneous_downloads = 3
+        # Movemos carpetas solo al finalizar el lote de descargas.
         self.pending_downloads = []
         self.active_tasks = []
         self.task_widgets = {}
@@ -366,10 +365,7 @@ class MainWindow(QMainWindow):
         self._start_next_downloads()
 
     def _start_next_downloads(self):
-        while (
-            len(self.active_tasks) < self.max_simultaneous_downloads
-            and self.pending_downloads
-        ):
+        while self.pending_downloads:
             link, title, metadata, download_key = self.pending_downloads.pop(0)
 
             widget = DownloadWidget(title)
