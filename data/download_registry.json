@@ -1,0 +1,1625 @@
+{
+  "downloads": {
+    "track:1077652405": {
+      "album": "Q-MHz",
+      "artist": "Q-MHz",
+      "link": "https://music.apple.com/mx/album/aishikata-nante-shiranai-feat-nanjo-yoshino/1077652251?i=1077652405&l=en-GB",
+      "relative_path": "Q-MHz/Q-MHz"
+    },
+    "track:1092722103": {
+      "album": "Pride",
+      "artist": "White Lion",
+      "link": "https://music.apple.com/mx/album/wait/1092722093?i=1092722103",
+      "relative_path": "White Lion/Pride"
+    },
+    "track:1110960681": {
+      "album": "If I'm Honest",
+      "artist": "Blake Shelton",
+      "link": "https://music.apple.com/mx/album/go-ahead-and-break-my-heart-feat-gwen-stefani/1110959376?i=1110960681",
+      "relative_path": "Blake Shelton/If I'm Honest"
+    },
+    "track:1122778616": {
+      "album": "Viva la Vida (Prospekt's March Edition)",
+      "artist": "Coldplay",
+      "link": "https://music.apple.com/mx/album/viva-la-vida/1122778377?i=1122778616",
+      "relative_path": "Coldplay/Viva la Vida (Prospekt's March Edition)"
+    },
+    "track:1122782283": {
+      "album": "Parachutes",
+      "artist": "Coldplay",
+      "link": "https://music.apple.com/mx/album/yellow/1122782080?i=1122782283",
+      "relative_path": "Coldplay/Parachutes"
+    },
+    "track:1184761852": {
+      "album": "Somos Uno Y Lo Mismo",
+      "artist": "Adrián Barba",
+      "link": "https://music.apple.com/mx/album/el-poder-nuestro-es/1184761514?i=1184761852",
+      "relative_path": "Adrián Barba/Somos Uno Y Lo Mismo"
+    },
+    "track:1184761856": {
+      "album": "Somos Uno Y Lo Mismo",
+      "artist": "Adrián Barba",
+      "link": "https://music.apple.com/mx/album/el-d%C3%ADa-del-destino/1184761514?i=1184761856",
+      "relative_path": "Adrián Barba/Somos Uno Y Lo Mismo"
+    },
+    "track:1193701328": {
+      "album": "÷ (Deluxe)",
+      "artist": "Ed Sheeran",
+      "link": "https://music.apple.com/mx/album/castle-on-the-hill/1193701079?i=1193701328",
+      "relative_path": "Ed Sheeran/÷ (Deluxe)"
+    },
+    "track:1214541211": {
+      "album": "Love, Peace & Fire",
+      "artist": "Superfly",
+      "link": "https://music.apple.com/mx/album/aini-dakarete/1214540974?i=1214541211",
+      "relative_path": "Superfly/Love, Peace & Fire"
+    },
+    "track:1237545992": {
+      "album": "The Crossing",
+      "artist": "nano",
+      "link": "https://music.apple.com/mx/album/dreamcatcher/1237545884?i=1237545992",
+      "relative_path": "nano/The Crossing"
+    },
+    "track:1247384817": {
+      "album": "175R(e) BEST2 - EP",
+      "artist": "175R",
+      "link": "https://music.apple.com/mx/album/glory-days/1247384807?i=1247384817&l=en-GB",
+      "relative_path": "175R/175R(e) BEST2 - EP"
+    },
+    "track:1269268688": {
+      "album": "Beautiful Trauma",
+      "artist": "P!nk",
+      "link": "https://music.apple.com/mx/album/beautiful-trauma/1269268686?i=1269268688",
+      "relative_path": "P!nk/Beautiful Trauma"
+    },
+    "track:1274300446": {
+      "album": "Astronomia - Single",
+      "artist": "Vicetone & Tony Igy",
+      "link": "https://music.apple.com/mx/album/astronomia/1274299861?i=1274300446",
+      "relative_path": "Vicetone & Tony Igy/Astronomia - Single"
+    },
+    "track:1368866141": {
+      "album": "Open Up and Say... Ahh!",
+      "artist": "Poison",
+      "link": "https://music.apple.com/mx/album/fallen-angel/1368865887?i=1368866141",
+      "relative_path": "Poison/Open Up and Say... Ahh!"
+    },
+    "track:1377826748": {
+      "album": "Appetite For Destruction (Super Deluxe)",
+      "artist": "Guns N' Roses",
+      "link": "https://music.apple.com/mx/album/paradise-city/1377826053?i=1377826748&l=en-GB",
+      "relative_path": "Guns N' Roses/Appetite For Destruction (Super Deluxe)"
+    },
+    "track:1377826892": {
+      "album": "Appetite For Destruction (Super Deluxe)",
+      "artist": "Guns N' Roses",
+      "link": "https://music.apple.com/mx/album/sweet-child-o-mine/1377826053?i=1377826892",
+      "relative_path": "Guns N' Roses/Appetite For Destruction (Super Deluxe)"
+    },
+    "track:1377827086": {
+      "album": "Appetite For Destruction (Super Deluxe)",
+      "artist": "Guns N' Roses",
+      "link": "https://music.apple.com/mx/album/patience/1377826053?i=1377827086",
+      "relative_path": "Guns N' Roses/Appetite For Destruction (Super Deluxe)"
+    },
+    "track:142415286": {
+      "album": "Pride - Single",
+      "artist": "Miki Imai",
+      "link": "https://music.apple.com/mx/album/pride/142415235?i=142415286&l=en-GB",
+      "relative_path": "Miki Imai/Pride - Single"
+    },
+    "track:1428703480": {
+      "album": "Wataridori / Dracula La - Single",
+      "artist": "[Alexandros]",
+      "link": "https://music.apple.com/mx/album/wataridori/1428703463?i=1428703480&l=en-GB",
+      "relative_path": "[Alexandros]/Wataridori _ Dracula La - Single"
+    },
+    "track:1434005924": {
+      "album": "Your Name.",
+      "artist": "RADWIMPS",
+      "link": "https://music.apple.com/mx/album/sparkle-movie-ver/1434005560?i=1434005924",
+      "relative_path": "RADWIMPS/Your Name"
+    },
+    "track:1436577490": {
+      "album": "Delta",
+      "artist": "Mumford & Sons",
+      "link": "https://music.apple.com/mx/album/guiding-light/1436577482?i=1436577490",
+      "relative_path": "Mumford & Sons/Delta"
+    },
+    "track:1436825394": {
+      "album": "Red Swan (feat. HYDE) - Single",
+      "artist": "YOSHIKI",
+      "link": "https://music.apple.com/mx/album/red-swan-feat-hyde/1436825393?i=1436825394",
+      "relative_path": "YOSHIKI/Red Swan (feat. HYDE) - Single"
+    },
+    "track:1439582678": {
+      "album": "Thank You for the Music - Single",
+      "artist": "Diana Garnet",
+      "link": "https://music.apple.com/mx/album/thank-you-for-the-music/1439582676?i=1439582678",
+      "relative_path": "Diana Garnet/Thank You for the Music - Single"
+    },
+    "track:1440631628": {
+      "album": "Human Clay",
+      "artist": "Creed",
+      "link": "https://music.apple.com/mx/album/higher/1440631060?i=1440631628&l=en-GB",
+      "relative_path": "Creed/Human Clay"
+    },
+    "track:1440652752": {
+      "album": "The Great Divide",
+      "artist": "Scott Stapp",
+      "link": "https://music.apple.com/mx/album/broken/1440652544?i=1440652752",
+      "relative_path": "Scott Stapp/The Great Divide"
+    },
+    "track:1440747418": {
+      "album": "Finding Beauty In Negative Spaces (Bonus Track Version)",
+      "artist": "Seether",
+      "link": "https://music.apple.com/mx/album/rise-above-this/1440746793?i=1440747418",
+      "relative_path": "Seether/Finding Beauty In Negative Spaces (Bonus Track Version)"
+    },
+    "track:1440763358": {
+      "album": "First Love (Remastered 2014)",
+      "artist": "Hikaru Utada",
+      "link": "https://music.apple.com/mx/album/first-love-remastered-2014/1440763349?i=1440763358",
+      "relative_path": "Hikaru Utada/First Love (Remastered 2014)"
+    },
+    "track:1440768816": {
+      "album": "No Name Face",
+      "artist": "Lifehouse",
+      "link": "https://music.apple.com/mx/album/everything/1440768163?i=1440768816",
+      "relative_path": "Lifehouse/No Name Face"
+    },
+    "track:1440788242": {
+      "album": "Full Circle",
+      "artist": "Creed",
+      "link": "https://music.apple.com/mx/album/rain/1440788031?i=1440788242",
+      "relative_path": "Creed/Full Circle"
+    },
+    "track:1440795891": {
+      "album": "Fallen Empires",
+      "artist": "Snow Patrol",
+      "link": "https://music.apple.com/mx/album/this-isnt-everything-you-are/1440795336?i=1440795891",
+      "relative_path": "Snow Patrol/Fallen Empires"
+    },
+    "track:1440818310": {
+      "album": "Welcome to the Freakshow",
+      "artist": "Hinder",
+      "link": "https://music.apple.com/mx/album/should-have-known-better/1440818139?i=1440818310",
+      "relative_path": "Hinder/Welcome to the Freakshow"
+    },
+    "track:1440851519": {
+      "album": "Third Stage",
+      "artist": "Boston",
+      "link": "https://music.apple.com/mx/album/hollyann/1440851310?i=1440851519",
+      "relative_path": "Boston/Third Stage"
+    },
+    "track:1440864350": {
+      "album": "Day & Age",
+      "artist": "The Killers",
+      "link": "https://music.apple.com/mx/album/human/1440863940?i=1440864350",
+      "relative_path": "The Killers/Day & Age"
+    },
+    "track:1440896193": {
+      "album": "Use Your Illusion I",
+      "artist": "Guns N' Roses",
+      "link": "https://music.apple.com/mx/album/november-rain/1440896026?i=1440896193&l=en-GB",
+      "relative_path": "Guns N' Roses/Use Your Illusion I"
+    },
+    "track:1440908245": {
+      "album": "Hysteria (Deluxe Edition)",
+      "artist": "Def Leppard",
+      "link": "https://music.apple.com/mx/album/hysteria/1440907597?i=1440908245",
+      "relative_path": "Def Leppard/Hysteria (Deluxe Edition)"
+    },
+    "track:1441817578": {
+      "album": "Eye of the Storm",
+      "artist": "ONE OK ROCK",
+      "link": "https://music.apple.com/mx/album/stand-out-fit-in/1441817576?i=1441817578",
+      "relative_path": "ONE OK ROCK/Eye of the Storm"
+    },
+    "track:1442284602": {
+      "album": "Hopes and Fears (Non EU Version)",
+      "artist": "Keane",
+      "link": "https://music.apple.com/mx/album/this-is-the-last-time/1442284059?i=1442284602",
+      "relative_path": "Keane/Hopes and Fears (Non EU Version)"
+    },
+    "track:1442950020": {
+      "album": "The Joshua Tree (30th Anniversary Super Deluxe Edition)",
+      "artist": "U2",
+      "link": "https://music.apple.com/mx/album/with-or-without-you/1442950015?i=1442950020",
+      "relative_path": "U2/The Joshua Tree (30th Anniversary Super Deluxe Edition)"
+    },
+    "track:1442952607": {
+      "album": "Hot In the Shade",
+      "artist": "Kiss",
+      "link": "https://music.apple.com/mx/album/forever/1442951646?i=1442952607&l=en-GB",
+      "relative_path": "Kiss/Hot In the Shade"
+    },
+    "track:1443095332": {
+      "album": "Meet the Orphans",
+      "artist": "Don Omar",
+      "link": "https://music.apple.com/mx/album/danza-kuduro-feat-lucenzo/1443095016?i=1443095332&l=en-GB",
+      "relative_path": "Don Omar/Meet the Orphans"
+    },
+    "track:1443182653": {
+      "album": "Strangeland (Deluxe Version)",
+      "artist": "Keane",
+      "link": "https://music.apple.com/mx/album/silenced-by-the-night/1443182651?i=1443182653",
+      "relative_path": "Keane/Strangeland (Deluxe Version)"
+    },
+    "track:1443182658": {
+      "album": "Strangeland (Deluxe Version)",
+      "artist": "Keane",
+      "link": "https://music.apple.com/mx/album/sovereign-light-caf%C3%A9/1443182651?i=1443182658",
+      "relative_path": "Keane/Strangeland (Deluxe Version)"
+    },
+    "track:1443724414": {
+      "album": "How Do You Like Me Now?!",
+      "artist": "Toby Keith",
+      "link": "https://music.apple.com/mx/album/how-do-you-like-me-now/1443724396?i=1443724414",
+      "relative_path": "Toby Keith/How Do You Like Me Now_!"
+    },
+    "track:1444005128": {
+      "album": "Special Forces",
+      "artist": "38 Special",
+      "link": "https://music.apple.com/mx/album/caught-up-in-you/1444004857?i=1444005128",
+      "relative_path": "38 Special/Special Forces"
+    },
+    "track:1444044841": {
+      "album": "Babel (Deluxe)",
+      "artist": "Mumford & Sons",
+      "link": "https://music.apple.com/mx/album/i-will-wait/1444044667?i=1444044841",
+      "relative_path": "Mumford & Sons/Babel (Deluxe)"
+    },
+    "track:1444054514": {
+      "album": "Take It to the Limit",
+      "artist": "Hinder",
+      "link": "https://music.apple.com/mx/album/without-you/1444054051?i=1444054514",
+      "relative_path": "Hinder/Take It to the Limit"
+    },
+    "track:1444119539": {
+      "album": "A Hundred Million Suns",
+      "artist": "Snow Patrol",
+      "link": "https://music.apple.com/mx/album/crack-the-shutters/1444119533?i=1444119539",
+      "relative_path": "Snow Patrol/A Hundred Million Suns"
+    },
+    "track:1445320174": {
+      "album": "Signal Fire - EP",
+      "artist": "Snow Patrol",
+      "link": "https://music.apple.com/mx/album/signal-fire-as-featured-in-spiderman-3-full-version/1445320172?i=1445320174",
+      "relative_path": "Snow Patrol/Signal Fire - EP"
+    },
+    "track:1446781794": {
+      "album": "Momentary Sixth Sense",
+      "artist": "aimyon",
+      "link": "https://music.apple.com/mx/album/let-the-night/1446781785?i=1446781794",
+      "relative_path": "aimyon/Momentary Sixth Sense"
+    },
+    "track:1447258539": {
+      "album": "Eyes Open",
+      "artist": "Snow Patrol",
+      "link": "https://music.apple.com/mx/album/chasing-cars/1447258529?i=1447258539",
+      "relative_path": "Snow Patrol/Eyes Open"
+    },
+    "track:1452951799": {
+      "album": "Reboot",
+      "artist": "Brooks & Dunn",
+      "link": "https://music.apple.com/mx/album/brand-new-man-with-luke-combs/1452951797?i=1452951799",
+      "relative_path": "Brooks & Dunn/Reboot"
+    },
+    "track:1473739475": {
+      "album": "JIGGY",
+      "artist": "千里",
+      "link": "https://music.apple.com/mx/album/sky-land/1473739341?i=1473739475&l=en-GB",
+      "relative_path": "千里/JIGGY"
+    },
+    "track:1481537593": {
+      "album": "ANTITHESE",
+      "artist": "MY FIRST STORY",
+      "link": "https://music.apple.com/mx/album/%E4%B8%8D%E5%8F%AF%E9%80%86%E3%83%AA%E3%83%97%E3%83%AC%E3%82%A4%E3%82%B9-fukagyaku-replace/1481537579?i=1481537593&l=en-GB",
+      "relative_path": "MY FIRST STORY/ANTITHESE"
+    },
+    "track:1484034161": {
+      "album": "NOISY Lab.",
+      "artist": "ZAQ",
+      "link": "https://music.apple.com/mx/album/sparkling-daydream/1484034153?i=1484034161&l=en-GB",
+      "relative_path": "ZAQ/NOISY Lab"
+    },
+    "track:1484034327": {
+      "album": "Z-ONE",
+      "artist": "ZAQ",
+      "link": "https://music.apple.com/mx/album/serendipity/1484034223?i=1484034327",
+      "relative_path": "ZAQ/Z-ONE"
+    },
+    "track:1485833906": {
+      "album": "Weathering With You (Complete Version) - EP",
+      "artist": "RADWIMPS",
+      "link": "https://music.apple.com/mx/album/grand-escape-feat-toko-miura/1485833901?i=1485833906",
+      "relative_path": "RADWIMPS/Weathering With You (Complete Version) - EP"
+    },
+    "track:1508090170": {
+      "album": "Ángeles Fuimos, Somos y Seremos",
+      "artist": "Adrián Barba",
+      "link": "https://music.apple.com/mx/album/mind-power-ki-from-dragon-ball-z-feat-omar1up-arnold02/1508089886?i=1508090170",
+      "relative_path": "Adrián Barba/Ángeles Fuimos, Somos y Seremos"
+    },
+    "track:1525622005": {
+      "album": "HRGN",
+      "artist": "ひらがなかみやど",
+      "link": "https://music.apple.com/mx/album/%E3%82%B3%E3%82%B3%E3%83%AD%E3%81%AE%E3%81%A1%E3%81%9A/1525621846?i=1525622005",
+      "relative_path": "ひらがなかみやど/HRGN"
+    },
+    "track:1526170285": {
+      "album": "Hybrid Theory (20th Anniversary Edition)",
+      "artist": "LINKIN PARK",
+      "link": "https://music.apple.com/mx/album/in-the-end/1526170276?i=1526170285",
+      "relative_path": "LINKIN PARK/Hybrid Theory (20th Anniversary Edition)"
+    },
+    "track:1526194192": {
+      "album": "Hot Fuss",
+      "artist": "The Killers",
+      "link": "https://music.apple.com/mx/album/mr-brightside/1526194184?i=1526194192",
+      "relative_path": "The Killers/Hot Fuss"
+    },
+    "track:1531847485": {
+      "album": "homura - EP",
+      "artist": "LiSA",
+      "link": "https://music.apple.com/mx/album/homura/1531847478?i=1531847485&l=en-GB",
+      "relative_path": "LiSA/homura - EP"
+    },
+    "track:1536113991": {
+      "album": "コンプリケイション - EP",
+      "artist": "ROOKiEZ is PUNK'D",
+      "link": "https://music.apple.com/mx/album/fortune/1536113987?i=1536113991&l=en-GB",
+      "relative_path": "ROOKiEZ is PUNK'D/コンプリケイション - EP"
+    },
+    "track:1536123455": {
+      "album": "XX emotion",
+      "artist": "FLiP",
+      "link": "https://music.apple.com/mx/album/%E3%83%AF%E3%83%B3%E3%83%80%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89/1536123451?i=1536123455&l=en-GB",
+      "relative_path": "FLiP/XX emotion"
+    },
+    "track:1536371916": {
+      "album": "Broken Youth - Single",
+      "artist": "NICO Touches the Walls",
+      "link": "https://music.apple.com/mx/album/broken-youth/1536371644?i=1536371916&l=en-GB",
+      "relative_path": "NICO Touches the Walls/Broken Youth - Single"
+    },
+    "track:1536382006": {
+      "album": "MICROCOSM",
+      "artist": "FLOW",
+      "link": "https://music.apple.com/mx/album/sign/1536382003?i=1536382006",
+      "relative_path": "FLOW/MICROCOSM"
+    },
+    "track:1536383301": {
+      "album": "DOS ANGELES",
+      "artist": "Joe Inoue",
+      "link": "https://music.apple.com/mx/album/home/1536383298?i=1536383301",
+      "relative_path": "Joe Inoue/DOS ANGELES"
+    },
+    "track:1536444312": {
+      "album": "FLOW THE MAX !!!",
+      "artist": "FLOW",
+      "link": "https://music.apple.com/mx/album/hero-%E5%B8%8C%E6%9C%9B%E3%81%AE%E6%AD%8C/1536444308?i=1536444312",
+      "relative_path": "FLOW/FLOW THE MAX !!!"
+    },
+    "track:1536486502": {
+      "album": "WE'VE BEEN - Single",
+      "artist": "TENGUBOY",
+      "link": "https://music.apple.com/mx/album/weve-been/1536486500?i=1536486502&l=en-GB",
+      "relative_path": "TENGUBOY/WE'VE BEEN - Single"
+    },
+    "track:1537249843": {
+      "album": "BIRTHDAY",
+      "artist": "ClariS",
+      "link": "https://music.apple.com/mx/album/irony/1537249841?i=1537249843",
+      "relative_path": "ClariS/BIRTHDAY"
+    },
+    "track:1537253802": {
+      "album": "o1",
+      "artist": "SawanoHiroyuki[nZk]",
+      "link": "https://music.apple.com/mx/album/a-z-feat-mizuki/1537253796?i=1537253802",
+      "relative_path": "SawanoHiroyuki[nZk]/o1"
+    },
+    "track:1537337669": {
+      "album": "Resolution - EP",
+      "artist": "Haruka Tomatsu",
+      "link": "https://music.apple.com/mx/album/resolution/1537337668?i=1537337669&l=en-GB",
+      "relative_path": "Haruka Tomatsu/Resolution - EP"
+    },
+    "track:1537437904": {
+      "album": "guitarium",
+      "artist": "miwa",
+      "link": "https://music.apple.com/mx/album/again-again/1537437899?i=1537437904",
+      "relative_path": "miwa/guitarium"
+    },
+    "track:1537734490": {
+      "album": "Spinning World - EP",
+      "artist": "Diana Garnet",
+      "link": "https://music.apple.com/mx/album/spinning-world/1537734489?i=1537734490&l=en-GB",
+      "relative_path": "Diana Garnet/Spinning World - EP"
+    },
+    "track:1537902977": {
+      "album": "R∃/MEMBER",
+      "artist": "SawanoHiroyuki[nZk]",
+      "link": "https://music.apple.com/mx/album/remember/1537902814?i=1537902977",
+      "relative_path": "SawanoHiroyuki[nZk]/R∃_MEMBER"
+    },
+    "track:1537909393": {
+      "album": "from the edge (feat. LiSA) - Single",
+      "artist": "FictionJunction",
+      "link": "https://music.apple.com/mx/album/from-the-edge-feat-lisa/1537909392?i=1537909393&l=en-GB",
+      "relative_path": "FictionJunction/from the edge (feat. LiSA) - Single"
+    },
+    "track:1538099673": {
+      "album": "4",
+      "artist": "SPYAIR",
+      "link": "https://music.apple.com/mx/album/%E3%82%A2%E3%82%A4%E3%83%A0-%E3%82%A2-%E3%83%93%E3%83%AA%E3%83%BC%E3%83%90%E3%83%BC/1538099670?i=1538099673",
+      "relative_path": "SPYAIR/4"
+    },
+    "track:1538099891": {
+      "album": "4",
+      "artist": "SPYAIR",
+      "link": "https://music.apple.com/mx/album/%E3%82%A4%E3%83%9E%E3%82%B8%E3%83%8D%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/1538099670?i=1538099891",
+      "relative_path": "SPYAIR/4"
+    },
+    "track:1538131041": {
+      "album": "檸檬",
+      "artist": "BURNOUT SYNDROMES",
+      "link": "https://music.apple.com/mx/album/fly-high/1538131038?i=1538131041&l=en-GB",
+      "relative_path": "BURNOUT SYNDROMES/檸檬"
+    },
+    "track:1538131047": {
+      "album": "檸檬",
+      "artist": "BURNOUT SYNDROMES",
+      "link": "https://music.apple.com/mx/album/%E3%83%92%E3%82%AB%E3%83%AA%E3%82%A2%E3%83%AC/1538131038?i=1538131047",
+      "relative_path": "BURNOUT SYNDROMES/檸檬"
+    },
+    "track:1538133512": {
+      "album": "孔雀",
+      "artist": "BURNOUT SYNDROMES",
+      "link": "https://music.apple.com/mx/album/%E8%8A%B1%E4%B8%80%E5%8C%81/1538133510?i=1538133512",
+      "relative_path": "BURNOUT SYNDROMES/孔雀"
+    },
+    "track:1538157315": {
+      "album": "TIME",
+      "artist": "KANA-BOON",
+      "link": "https://music.apple.com/mx/album/%E3%82%B7%E3%83%AB%E3%82%A8%E3%83%83%E3%83%88/1538157060?i=1538157315",
+      "relative_path": "KANA-BOON/TIME"
+    },
+    "track:1538160325": {
+      "album": "FLOW THE BEST 〜アニメ縛り〜",
+      "artist": "FLOW",
+      "link": "https://music.apple.com/mx/album/world-end/1538160316?i=1538160325",
+      "relative_path": "FLOW/FLOW THE BEST 〜アニメ縛り〜"
+    },
+    "track:1538261226": {
+      "album": "Sun Dance",
+      "artist": "Aimer",
+      "link": "https://music.apple.com/mx/album/one/1538260864?i=1538261226&l=en-GB",
+      "relative_path": "Aimer/Sun Dance"
+    },
+    "track:1538262079": {
+      "album": "aranami - Single",
+      "artist": "tacica",
+      "link": "https://music.apple.com/mx/album/aranami/1538262078?i=1538262079&l=en-GB",
+      "relative_path": "tacica/aranami - Single"
+    },
+    "track:1538265327": {
+      "album": "eyes",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/somebody/1538265322?i=1538265327",
+      "relative_path": "milet/eyes"
+    },
+    "track:1538265328": {
+      "album": "eyes",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/inside-you/1538265322?i=1538265328",
+      "relative_path": "milet/eyes"
+    },
+    "track:1538265335": {
+      "album": "eyes",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/wonderland/1538265322?i=1538265335",
+      "relative_path": "milet/eyes"
+    },
+    "track:1538275660": {
+      "album": "BOOTLEG",
+      "artist": "Kenshi Yonezu",
+      "link": "https://music.apple.com/mx/album/%E3%83%94%E3%83%BC%E3%82%B9%E3%82%B5%E3%82%A4%E3%83%B3-peace-sign/1538275115?i=1538275660",
+      "relative_path": "Kenshi Yonezu/BOOTLEG"
+    },
+    "track:1538286294": {
+      "album": "Fairy Party",
+      "artist": "ClariS",
+      "link": "https://music.apple.com/mx/album/%E3%83%92%E3%83%88%E3%83%AA%E3%82%B4%E3%83%88/1538286291?i=1538286294",
+      "relative_path": "ClariS/Fairy Party"
+    },
+    "track:1538286723": {
+      "album": "紅蓮華 - EP",
+      "artist": "LiSA",
+      "link": "https://music.apple.com/mx/album/%E7%B4%85%E8%93%AE%E8%8F%AF/1538286722?i=1538286723",
+      "relative_path": "LiSA/紅蓮華 - EP"
+    },
+    "track:1538286921": {
+      "album": "2V-ALK",
+      "artist": "SawanoHiroyuki[nZk]",
+      "link": "https://music.apple.com/mx/album/amazing-trees-feat-tielle/1538286919?i=1538286921&l=en-GB",
+      "relative_path": "SawanoHiroyuki[nZk]/2V-ALK"
+    },
+    "track:1542182544": {
+      "album": "THE BOOK",
+      "artist": "YOASOBI",
+      "link": "https://music.apple.com/mx/album/%E3%81%82%E3%81%AE%E5%A4%A2%E3%82%92%E3%81%AA%E3%81%9E%E3%81%A3%E3%81%A6/1542182291?i=1542182544",
+      "relative_path": "YOASOBI/THE BOOK"
+    },
+    "track:1542182776": {
+      "album": "THE BOOK",
+      "artist": "YOASOBI",
+      "link": "https://music.apple.com/mx/album/%E5%A4%9C%E3%81%AB%E9%A7%86%E3%81%91%E3%82%8B/1542182291?i=1542182776",
+      "relative_path": "YOASOBI/THE BOOK"
+    },
+    "track:1542705790": {
+      "album": "Sing;est",
+      "artist": "Hiroki Moriuchi",
+      "link": "https://music.apple.com/mx/album/inochini-kirawareteiru/1542705554?i=1542705790&l=en-GB",
+      "relative_path": "Hiroki Moriuchi/Sing;est"
+    },
+    "track:1542917806": {
+      "album": "15周年記念 オールシングルコレクション",
+      "artist": "平原綾香",
+      "link": "https://music.apple.com/mx/album/jupiter/1542917805?i=1542917806&l=en-GB",
+      "relative_path": "平原綾香/15周年記念 オールシングルコレクション"
+    },
+    "track:1550231281": {
+      "album": "TVアニメ「Re:ゼロから始める異世界生活」2nd season 後期エンディングテーマ「Believe in you」 - EP",
+      "artist": "nonoc",
+      "link": "https://music.apple.com/mx/album/believe-in-you/1550231280?i=1550231281",
+      "relative_path": "nonoc/TVアニメ「Re_ゼロから始める異世界生活」2nd season 後期エンディングテーマ「Believe in you」 - EP"
+    },
+    "track:1553126198": {
+      "album": "Let There Be Love - EP",
+      "artist": "James Bay",
+      "link": "https://music.apple.com/mx/album/peer-pressure-feat-julia-michaels/1553124989?i=1553126198",
+      "relative_path": "James Bay/Let There Be Love - EP"
+    },
+    "track:1558761699": {
+      "album": "All Timers - EP",
+      "artist": "Def Leppard",
+      "link": "https://music.apple.com/mx/album/when-love-and-hate-collide/1558761153?i=1558761699",
+      "relative_path": "Def Leppard/All Timers - EP"
+    },
+    "track:1568442751": {
+      "album": "「鬼滅の刃」竈門炭治郎 立志編 オリジナルサウンドトラック",
+      "artist": "Varios Artistas",
+      "link": "https://music.apple.com/mx/album/%E7%AB%88%E9%96%80%E7%82%AD%E6%B2%BB%E9%83%8E%E3%81%AE%E3%81%86%E3%81%9F-ost-ver-feat-nami-nakagawa/1568441901?i=1568442751&l=en-GB",
+      "relative_path": "Varios Artistas/「鬼滅の刃」竈門炭治郎 立志編 オリジナルサウンドトラック"
+    },
+    "track:1568980896": {
+      "album": "Matasaburo - Single",
+      "artist": "Yorushika",
+      "link": "https://music.apple.com/mx/album/matasaburo/1568980595?i=1568980896",
+      "relative_path": "Yorushika/Matasaburo - Single"
+    },
+    "track:1571636675": {
+      "album": "TOKYO",
+      "artist": "BURNOUT SYNDROMES",
+      "link": "https://music.apple.com/mx/album/%E9%8A%80%E4%B8%96%E7%95%8C/1571636010?i=1571636675",
+      "relative_path": "BURNOUT SYNDROMES/TOKYO"
+    },
+    "track:1579813453": {
+      "album": "コトバアソビ",
+      "artist": "TRUE",
+      "link": "https://music.apple.com/mx/album/another-colony/1579813449?i=1579813453&l=en-GB",
+      "relative_path": "TRUE/コトバアソビ"
+    },
+    "track:1585398546": {
+      "album": "No More Tears (30th Anniversary Expanded Edition)",
+      "artist": "Ozzy Osbourne",
+      "link": "https://music.apple.com/mx/album/mama-im-coming-home/1585398360?i=1585398546&l=en-GB",
+      "relative_path": "Ozzy Osbourne/No More Tears (30th Anniversary Expanded Edition)"
+    },
+    "track:158642250": {
+      "album": "Don't Look Back",
+      "artist": "Boston",
+      "link": "https://music.apple.com/mx/album/a-man-ill-never-be/158642228?i=158642250&l=en-GB",
+      "relative_path": "Boston/Don't Look Back"
+    },
+    "track:1592056443": {
+      "album": "明け星 / 白銀 - EP",
+      "artist": "LiSA",
+      "link": "https://music.apple.com/mx/album/%E6%98%8E%E3%81%91%E6%98%9F/1592056442?i=1592056443&l=en-GB",
+      "relative_path": "LiSA/明け星 _ 白銀 - EP"
+    },
+    "track:1592056444": {
+      "album": "明け星 / 白銀 - EP",
+      "artist": "LiSA",
+      "link": "https://music.apple.com/mx/album/%E7%99%BD%E9%8A%80/1592056442?i=1592056444&l=en-GB",
+      "relative_path": "LiSA/明け星 _ 白銀 - EP"
+    },
+    "track:1594814706": {
+      "album": "残響散歌 / 朝が来る - EP",
+      "artist": "Aimer",
+      "link": "https://music.apple.com/mx/album/%E6%AE%8B%E9%9F%BF%E6%95%A3%E6%AD%8C/1594814582?i=1594814706&l=en-GB",
+      "relative_path": "Aimer/残響散歌 _ 朝が来る - EP"
+    },
+    "track:1594814709": {
+      "album": "残響散歌 / 朝が来る - EP",
+      "artist": "Aimer",
+      "link": "https://music.apple.com/mx/album/%E6%9C%9D%E3%81%8C%E6%9D%A5%E3%82%8B/1594814582?i=1594814709&l=en-GB",
+      "relative_path": "Aimer/残響散歌 _ 朝が来る - EP"
+    },
+    "track:1596199242": {
+      "album": "visions",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/fly-high/1596199239?i=1596199242",
+      "relative_path": "milet/visions"
+    },
+    "track:1596199248": {
+      "album": "visions",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/who-i-am/1596199239?i=1596199248&l=en-GB",
+      "relative_path": "milet/visions"
+    },
+    "track:1599543490": {
+      "album": "壱",
+      "artist": "Yuuri",
+      "link": "https://music.apple.com/mx/album/%E6%A1%9C%E6%99%B4/1599542521?i=1599543490&l=en-GB",
+      "relative_path": "Yuuri/壱"
+    },
+    "track:1606706137": {
+      "album": "Theatre of Pain (Deluxe Edition)",
+      "artist": "Mötley Crüe",
+      "link": "https://music.apple.com/mx/album/home-sweet-home/1606705802?i=1606706137&l=en-GB",
+      "relative_path": "Mötley Crüe/Theatre of Pain (Deluxe Edition)"
+    },
+    "track:1607227010": {
+      "album": "東京",
+      "artist": "SUPER BEAVER",
+      "link": "https://music.apple.com/mx/album/%E5%90%8D%E5%89%8D%E3%82%92%E5%91%BC%E3%81%B6%E3%82%88/1607227005?i=1607227010",
+      "relative_path": "SUPER BEAVER/東京"
+    },
+    "track:1619408877": {
+      "album": "Growin' Up",
+      "artist": "Luke Combs",
+      "link": "https://music.apple.com/mx/album/the-kind-of-love-we-make/1619408866?i=1619408877",
+      "relative_path": "Luke Combs/Growin' Up"
+    },
+    "track:1631153794": {
+      "album": "LOST+FOUND",
+      "artist": "DOBERMAN INFINITY",
+      "link": "https://music.apple.com/mx/album/%E5%A7%8B%E3%81%BE%E3%82%8A%E3%81%AE%E9%80%94%E4%B8%AD/1631153785?i=1631153794",
+      "relative_path": "DOBERMAN INFINITY/LOST+FOUND"
+    },
+    "track:1631154229": {
+      "album": "LOST+FOUND",
+      "artist": "DOBERMAN INFINITY",
+      "link": "https://music.apple.com/mx/album/love-is/1631153785?i=1631154229",
+      "relative_path": "DOBERMAN INFINITY/LOST+FOUND"
+    },
+    "track:1634361549": {
+      "album": "TVアニメ「オーバーロードIV」オープニングテーマ「HOLLOW HUNGER」 - EP",
+      "artist": "OxT",
+      "link": "https://music.apple.com/mx/album/hollow-hunger/1634361548?i=1634361549",
+      "relative_path": "OxT/TVアニメ「オーバーロードIV」オープニングテーマ「HOLLOW HUNGER」 - EP"
+    },
+    "track:1634556319": {
+      "album": "暁",
+      "artist": "Porno Graffitti",
+      "link": "https://music.apple.com/mx/album/vs/1634556196?i=1634556319",
+      "relative_path": "Porno Graffitti/暁"
+    },
+    "track:1635087078": {
+      "album": "Always You - Single",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/always-you/1635087077?i=1635087078",
+      "relative_path": "milet/Always You - Single"
+    },
+    "track:1640102584": {
+      "album": "Escape (2022 Remaster)",
+      "artist": "Journey",
+      "link": "https://music.apple.com/mx/album/dont-stop-believin-2022-remaster/1640102583?i=1640102584&l=en-GB",
+      "relative_path": "Journey/Escape (2022 Remaster)"
+    },
+    "track:1642017488": {
+      "album": "Jiwa Jiwa",
+      "artist": "Joe Inoue",
+      "link": "https://music.apple.com/mx/album/doinaka-lifestyle/1642017485?i=1642017488",
+      "relative_path": "Joe Inoue/Jiwa Jiwa"
+    },
+    "track:1648876468": {
+      "album": "だから僕は音楽を辞めた",
+      "artist": "Yorushika",
+      "link": "https://music.apple.com/mx/album/%E8%97%8D%E4%BA%8C%E4%B9%97/1648876058?i=1648876468",
+      "relative_path": "Yorushika/だから僕は音楽を辞めた"
+    },
+    "track:1651604092": {
+      "album": "UTA'S SONGS ONE PIECE FILM RED (All Video Version)",
+      "artist": "Ado",
+      "link": "https://music.apple.com/mx/album/im-invincible/1651603928?i=1651604092",
+      "relative_path": "Ado/UTA'S SONGS ONE PIECE FILM RED (All Video Version)"
+    },
+    "track:1658645345": {
+      "album": "Nine Lives",
+      "artist": "Aerosmith",
+      "link": "https://music.apple.com/mx/album/hole-in-my-soul/1658645109?i=1658645345",
+      "relative_path": "Aerosmith/Nine Lives"
+    },
+    "track:1658655246": {
+      "album": "Just Push Play",
+      "artist": "Aerosmith",
+      "link": "https://music.apple.com/mx/album/fly-away-from-here/1658654996?i=1658655246",
+      "relative_path": "Aerosmith/Just Push Play"
+    },
+    "track:1659013331": {
+      "album": "The End of Yesterday",
+      "artist": "Ellegarden",
+      "link": "https://music.apple.com/mx/album/goodbye-los-angeles/1659013026?i=1659013331&l=en-GB",
+      "relative_path": "Ellegarden/The End of Yesterday"
+    },
+    "track:1666738585": {
+      "album": "Gettin' Old",
+      "artist": "Luke Combs",
+      "link": "https://music.apple.com/mx/album/fast-car/1666738524?i=1666738585",
+      "relative_path": "Luke Combs/Gettin' Old"
+    },
+    "track:1670578702": {
+      "album": "HUMAN",
+      "artist": "ReoNa",
+      "link": "https://music.apple.com/mx/album/alive/1670577490?i=1670578702&l=en-GB",
+      "relative_path": "ReoNa/HUMAN"
+    },
+    "track:1678949889": {
+      "album": "絆ノ奇跡 / コイコガレ - EP",
+      "artist": "MAN WITH A MISSION & milet",
+      "link": "https://music.apple.com/mx/album/%E7%B5%86%E3%83%8E%E5%A5%87%E8%B7%A1/1678949877?i=1678949889&l=en-GB",
+      "relative_path": "MAN WITH A MISSION & milet/絆ノ奇跡 _ コイコガレ - EP"
+    },
+    "track:169256668": {
+      "album": "Road of Major II",
+      "artist": "ロードオブメジャー",
+      "link": "https://music.apple.com/mx/album/kokoroe/169253196?i=169256668",
+      "relative_path": "ロードオブメジャー/Road of Major II"
+    },
+    "track:1698949329": {
+      "album": "5am",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/%E3%82%B3%E3%82%A4%E3%82%B3%E3%82%AC%E3%83%AC/1698949327?i=1698949329&l=en-GB",
+      "relative_path": "milet/5am"
+    },
+    "track:1708663234": {
+      "album": "OU812 (Vinyl Version Remastered)",
+      "artist": "Van Halen",
+      "link": "https://music.apple.com/mx/album/when-its-love/1708663218?i=1708663234",
+      "relative_path": "Van Halen/OU812 (Vinyl Version Remastered)"
+    },
+    "track:1708663243": {
+      "album": "OU812 (Vinyl Version Remastered)",
+      "artist": "Van Halen",
+      "link": "https://music.apple.com/mx/album/feels-so-good/1708663218?i=1708663243&l=en-GB",
+      "relative_path": "Van Halen/OU812 (Vinyl Version Remastered)"
+    },
+    "track:1714080544": {
+      "album": "Sixpence None the Richer (Deluxe Anniversary Edition)",
+      "artist": "Sixpence None the Richer",
+      "link": "https://music.apple.com/mx/album/kiss-me/1714080539?i=1714080544&l=en-GB",
+      "relative_path": "Sixpence None the Richer/Sixpence None the Richer (Deluxe Anniversary Edition)"
+    },
+    "track:1714742649": {
+      "album": "12 hugs (like butterflies)",
+      "artist": "Hitsujibungaku",
+      "link": "https://music.apple.com/mx/album/more-than-words/1714742640?i=1714742649",
+      "relative_path": "Hitsujibungaku/12 hugs (like butterflies)"
+    },
+    "track:1714742656": {
+      "album": "12 hugs (like butterflies)",
+      "artist": "Hitsujibungaku",
+      "link": "https://music.apple.com/mx/album/%E6%B0%B8%E9%81%A0%E3%81%AE%E3%83%96%E3%83%AB%E3%83%BC/1714742640?i=1714742656",
+      "relative_path": "Hitsujibungaku/12 hugs (like butterflies)"
+    },
+    "track:1716474807": {
+      "album": "Inferno & More Hits",
+      "artist": "Mrs. GREEN APPLE",
+      "link": "https://music.apple.com/mx/album/romanticism/1716474339?i=1716474807",
+      "relative_path": "Mrs. GREEN APPLE/Inferno & More Hits"
+    },
+    "track:1716474810": {
+      "album": "Inferno & More Hits",
+      "artist": "Mrs. GREEN APPLE",
+      "link": "https://music.apple.com/mx/album/ao-to-natsu/1716474339?i=1716474810",
+      "relative_path": "Mrs. GREEN APPLE/Inferno & More Hits"
+    },
+    "track:1719633754": {
+      "album": "Unity - Single",
+      "artist": "TheFatRat",
+      "link": "https://music.apple.com/mx/album/unity/1719633753?i=1719633754",
+      "relative_path": "TheFatRat/Unity - Single"
+    },
+    "track:1727217022": {
+      "album": "Invasion of Your Privacy",
+      "artist": "Ratt",
+      "link": "https://music.apple.com/mx/album/youre-in-love/1727216760?i=1727217022&l=en-GB",
+      "relative_path": "Ratt/Invasion of Your Privacy"
+    },
+    "track:1727314020": {
+      "album": "Slave to the Grind",
+      "artist": "Skid Row",
+      "link": "https://music.apple.com/mx/album/in-a-darkened-room/1727313193?i=1727314020",
+      "relative_path": "Skid Row/Slave to the Grind"
+    },
+    "track:1745968087": {
+      "album": "CRACK STAR FLASH",
+      "artist": "GRANRODEO",
+      "link": "https://music.apple.com/mx/album/can-do/1745968084?i=1745968087",
+      "relative_path": "GRANRODEO/CRACK STAR FLASH"
+    },
+    "track:1747837595": {
+      "album": "hanataba - Single",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/hanataba/1747837590?i=1747837595&l=en-GB",
+      "relative_path": "milet/hanataba - Single"
+    },
+    "track:1747837600": {
+      "album": "hanataba - Single",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/bluer/1747837590?i=1747837600",
+      "relative_path": "milet/hanataba - Single"
+    },
+    "track:1747976467": {
+      "album": "夢幻 / 永久 -トコシエ- - EP",
+      "artist": "MY FIRST STORY & HYDE",
+      "link": "https://music.apple.com/mx/album/%E5%A4%A2%E5%B9%BB/1747976466?i=1747976467&l=en-GB",
+      "relative_path": "MY FIRST STORY & HYDE/夢幻 _ 永久 -トコシエ- - EP"
+    },
+    "track:1749452378": {
+      "album": "DREAM SOLISTER - Single",
+      "artist": "TRUE",
+      "link": "https://music.apple.com/mx/album/dream-solister/1749452374?i=1749452378&l=en-GB",
+      "relative_path": "TRUE/DREAM SOLISTER - Single"
+    },
+    "track:1754429354": {
+      "album": "Hello, World",
+      "artist": "K-391",
+      "link": "https://music.apple.com/mx/album/electro-house/1754429349?i=1754429354",
+      "relative_path": "K-391/Hello, World"
+    },
+    "track:1756673805": {
+      "album": "Across Miles",
+      "artist": "MindaRyn",
+      "link": "https://music.apple.com/mx/album/miracle-soup/1756673795?i=1756673805&l=en-GB",
+      "relative_path": "MindaRyn/Across Miles"
+    },
+    "track:1760053977": {
+      "album": "SHOCK TO THE SYSTEM (PART ONE) - EP",
+      "artist": "Daughtry",
+      "link": "https://music.apple.com/mx/album/pieces/1760053972?i=1760053977",
+      "relative_path": "Daughtry/SHOCK TO THE SYSTEM (PART ONE) - EP"
+    },
+    "track:1761688271": {
+      "album": "American Idiot (20th Anniversary Deluxe Edition)",
+      "artist": "Green Day",
+      "link": "https://music.apple.com/mx/album/wake-me-up-when-september-ends/1761687864?i=1761688271",
+      "relative_path": "Green Day/American Idiot (20th Anniversary Deluxe Edition)"
+    },
+    "track:1768218701": {
+      "album": "Same Blue - Single",
+      "artist": "OFFICIAL HIGE DANDISM",
+      "link": "https://music.apple.com/mx/album/same-blue/1768218700?i=1768218701",
+      "relative_path": "OFFICIAL HIGE DANDISM/Same Blue - Single"
+    },
+    "track:1783003034": {
+      "album": "DETOX",
+      "artist": "ONE OK ROCK",
+      "link": "https://music.apple.com/mx/album/matter/1783002933?i=1783003034",
+      "relative_path": "ONE OK ROCK/DETOX"
+    },
+    "track:1788386894": {
+      "album": "Stay Hungry (40th Anniversary Edition) [2024 Remaster]",
+      "artist": "Twisted Sister",
+      "link": "https://music.apple.com/mx/album/i-wanna-rock-2024-remaster/1788386877?i=1788386894",
+      "relative_path": "Twisted Sister/Stay Hungry (40th Anniversary Edition) [2024 Remaster]"
+    },
+    "track:1795905600": {
+      "album": "Kaiju - Single",
+      "artist": "sakanaction",
+      "link": "https://music.apple.com/mx/album/kaiju/1795905599?i=1795905600",
+      "relative_path": "sakanaction/Kaiju - Single"
+    },
+    "track:1797538837": {
+      "album": "「鬼滅の刃」刀鍛冶の里編 オリジナルサウンドトラック",
+      "artist": "Yuki Kajiura, Go Shiina, MAN WITH A MISSION & milet",
+      "link": "https://music.apple.com/mx/album/%E7%AB%88%E9%96%80%E7%A6%B0%E8%B1%86%E5%AD%90%E3%81%AE%E3%81%86%E3%81%9F-full-ver-feat-nami-nakagawa/1797538351?i=1797538837&l=en-GB",
+      "relative_path": "Yuki Kajiura, Go Shiina, MAN WITH A MISSION & milet/「鬼滅の刃」刀鍛冶の里編 オリジナルサウンドトラック"
+    },
+    "track:1799216471": {
+      "album": "わたしに花束 - Single",
+      "artist": "Ado",
+      "link": "https://music.apple.com/mx/album/%E3%82%8F%E3%81%9F%E3%81%97%E3%81%AB%E8%8A%B1%E6%9D%9F/1799216463?i=1799216471&l=en-GB",
+      "relative_path": "Ado/わたしに花束 - Single"
+    },
+    "track:1801114374": {
+      "album": "mimosa - Single",
+      "artist": "Ayumi Hamasaki",
+      "link": "https://music.apple.com/mx/album/mimosa/1801114373?i=1801114374&l=en-GB",
+      "relative_path": "Ayumi Hamasaki/mimosa - Single"
+    },
+    "track:1808353380": {
+      "album": "僕にはどうしてわかるんだろう - Single",
+      "artist": "Vaundy",
+      "link": "https://music.apple.com/mx/album/%E5%83%95%E3%81%AB%E3%81%AF%E3%81%A9%E3%81%86%E3%81%97%E3%81%A6%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%93%E3%81%A0%E3%82%8D%E3%81%86/1808353379?i=1808353380",
+      "relative_path": "Vaundy/僕にはどうしてわかるんだろう - Single"
+    },
+    "track:1809718829": {
+      "album": "retour (2025 Remaster)",
+      "artist": "Miki Imai",
+      "link": "https://music.apple.com/mx/album/%E3%82%82%E3%81%A3%E3%81%A8-%E3%82%82%E3%81%A3%E3%81%A8-%E3%82%82%E3%81%A3%E3%81%A8-2025-remaster/1809718824?i=1809718829&l=en-GB",
+      "relative_path": "Miki Imai/retour (2025 Remaster)"
+    },
+    "track:1816111085": {
+      "album": "I hate this love song - Single",
+      "artist": "Chanmina",
+      "link": "https://music.apple.com/mx/album/i-hate-this-love-song/1816111083?i=1816111085",
+      "relative_path": "Chanmina/I hate this love song - Single"
+    },
+    "track:1819419305": {
+      "album": "Prema",
+      "artist": "Fujii Kaze",
+      "link": "https://music.apple.com/mx/album/love-like-this/1819419299?i=1819419305&l=en-GB",
+      "relative_path": "Fujii Kaze/Prema"
+    },
+    "track:1821849522": {
+      "album": "Blue Jeans - Single",
+      "artist": "HANA",
+      "link": "https://music.apple.com/mx/album/blue-jeans/1821849174?i=1821849522&l=en-GB",
+      "relative_path": "HANA/Blue Jeans - Single"
+    },
+    "track:1826940240": {
+      "album": "Rashisa - Single",
+      "artist": "OFFICIAL HIGE DANDISM",
+      "link": "https://music.apple.com/mx/album/rashisa/1826940239?i=1826940240",
+      "relative_path": "OFFICIAL HIGE DANDISM/Rashisa - Single"
+    },
+    "track:1827140040": {
+      "album": "残酷な夜に輝け - Shine in the Cruel Night - Single",
+      "artist": "LiSA",
+      "link": "https://music.apple.com/mx/album/%E6%AE%8B%E9%85%B7%E3%81%AA%E5%A4%9C%E3%81%AB%E8%BC%9D%E3%81%91-shine-in-the-cruel-night/1827140038?i=1827140040&l=en-GB",
+      "relative_path": "LiSA/残酷な夜に輝け - Shine in the Cruel Night - Single"
+    },
+    "track:1833847450": {
+      "album": "zutto love song - Single",
+      "artist": "Vaundy",
+      "link": "https://music.apple.com/mx/album/zutto-love-song/1833847449?i=1833847450&l=en-GB",
+      "relative_path": "Vaundy/zutto love song - Single"
+    },
+    "track:1837826960": {
+      "album": "Giving Up Air - Single",
+      "artist": "The Temper Trap",
+      "link": "https://music.apple.com/mx/album/giving-up-air/1837826959?i=1837826960",
+      "relative_path": "The Temper Trap/Giving Up Air - Single"
+    },
+    "track:1838374870": {
+      "album": "Belt of Venus - EP",
+      "artist": "aimyon",
+      "link": "https://music.apple.com/mx/album/belt-of-venus/1838374869?i=1838374870",
+      "relative_path": "aimyon/Belt of Venus - EP"
+    },
+    "track:1838917472": {
+      "album": "Jinsei × Boku =",
+      "artist": "ONE OK ROCK",
+      "link": "https://music.apple.com/mx/album/the-beginning/1838917460?i=1838917472",
+      "relative_path": "ONE OK ROCK/Jinsei × Boku ="
+    },
+    "track:1838917473": {
+      "album": "Jinsei × Boku =",
+      "artist": "ONE OK ROCK",
+      "link": "https://music.apple.com/mx/album/clock-strikes/1838917460?i=1838917473&l=en-GB",
+      "relative_path": "ONE OK ROCK/Jinsei × Boku ="
+    },
+    "track:1838991863": {
+      "album": "The Story of the Wind and I - Single",
+      "artist": "Ado",
+      "link": "https://music.apple.com/mx/album/the-story-of-the-wind-and-i/1838991862?i=1838991863&l=en-GB",
+      "relative_path": "Ado/The Story of the Wind and I - Single"
+    },
+    "track:1839255098": {
+      "album": "Stellar Days - Single",
+      "artist": "Hata Motohiro",
+      "link": "https://music.apple.com/mx/album/stellar-days/1839255097?i=1839255098&l=en-GB",
+      "relative_path": "Hata Motohiro/Stellar Days - Single"
+    },
+    "track:1839886944": {
+      "album": "Akaza's Love Theme (Hakuji Theme) \"Demon Slayer: Infinity Castle [Emotional Version] - Single",
+      "artist": "Kensei Music",
+      "link": "https://music.apple.com/mx/album/akazas-love-theme-hakuji-theme-demon-slayer-infinity/1839886941?i=1839886944&l=en-GB",
+      "relative_path": "Kensei Music/Akaza's Love Theme (Hakuji Theme) _Demon Slayer_ Infinity Castle [Emotional Version] - Single"
+    },
+    "track:1840843504": {
+      "album": "THE REVO - Single",
+      "artist": "Porno Graffitti",
+      "link": "https://music.apple.com/mx/album/the-revo/1840843489?i=1840843504&l=en-GB",
+      "relative_path": "Porno Graffitti/THE REVO - Single"
+    },
+    "track:1841769602": {
+      "album": "Die On This Hill - Single",
+      "artist": "SIENNA SPIRO",
+      "link": "https://music.apple.com/mx/album/die-on-this-hill/1841769601?i=1841769602&l=en-GB",
+      "relative_path": "SIENNA SPIRO/Die On This Hill - Single"
+    },
+    "track:1841770170": {
+      "album": "愛の匂い - Single",
+      "artist": "岡村和義, Yasuyuki Okamura & Kazuyoshi Saito",
+      "link": "https://music.apple.com/mx/album/%E6%84%9B%E3%81%AE%E5%8C%82%E3%81%84/1841770169?i=1841770170&l=en-GB",
+      "relative_path": "岡村和義, Yasuyuki Okamura & Kazuyoshi Saito/愛の匂い - Single"
+    },
+    "track:1842755310": {
+      "album": "Protect the Light - Single",
+      "artist": "Spitz",
+      "link": "https://music.apple.com/mx/album/protect-the-light/1842755309?i=1842755310",
+      "relative_path": "Spitz/Protect the Light - Single"
+    },
+    "track:1843800809": {
+      "album": "ACTION - EP",
+      "artist": "eill",
+      "link": "https://music.apple.com/mx/album/last-scene/1843800805?i=1843800809",
+      "relative_path": "eill/ACTION - EP"
+    },
+    "track:1844289599": {
+      "album": "I - Single",
+      "artist": "BUMP OF CHICKEN",
+      "link": "https://music.apple.com/mx/album/i/1844289598?i=1844289599",
+      "relative_path": "BUMP OF CHICKEN/I - Single"
+    },
+    "track:1844327943": {
+      "album": "ファンファーレ - Single",
+      "artist": "Koji Tamaki",
+      "link": "https://music.apple.com/mx/album/%E3%83%95%E3%82%A1%E3%83%B3%E3%83%95%E3%82%A1%E3%83%BC%E3%83%AC/1844327941?i=1844327943&l=en-GB",
+      "relative_path": "Koji Tamaki/ファンファーレ - Single"
+    },
+    "track:1846517181": {
+      "album": "Little Bouquet - Single",
+      "artist": "Aimer",
+      "link": "https://music.apple.com/mx/album/little-bouquet/1846517180?i=1846517181",
+      "relative_path": "Aimer/Little Bouquet - Single"
+    },
+    "track:1846753803": {
+      "album": "Kimino Kasa - Single",
+      "artist": "Kaela Kimura",
+      "link": "https://music.apple.com/mx/album/kimino-kasa/1846753802?i=1846753803&l=en-GB",
+      "relative_path": "Kaela Kimura/Kimino Kasa - Single"
+    },
+    "track:1851916129": {
+      "album": "Mirror - EP",
+      "artist": "Leo Ieiri",
+      "link": "https://music.apple.com/mx/album/mirror-feat-kosuke-saito/1851916128?i=1851916129&l=en-GB",
+      "relative_path": "Leo Ieiri/Mirror - EP"
+    },
+    "track:1855760177": {
+      "album": "そのままでいいよ - Single",
+      "artist": "Che'Nelle",
+      "link": "https://music.apple.com/mx/album/%E3%81%9D%E3%81%AE%E3%81%BE%E3%81%BE%E3%81%A7%E3%81%84%E3%81%84%E3%82%88/1855760176?i=1855760177&l=en-GB",
+      "relative_path": "Che'Nelle/そのままでいいよ - Single"
+    },
+    "track:1856804269": {
+      "album": "1626",
+      "artist": "Re:name",
+      "link": "https://music.apple.com/mx/album/other-side/1856804260?i=1856804269&l=en-GB",
+      "relative_path": "Re_name/1626"
+    },
+    "track:1857852863": {
+      "album": "15th ANNIVERSARY BEST JYU-GONEN",
+      "artist": "Yu Takahashi",
+      "link": "https://music.apple.com/mx/album/reimei/1857851834?i=1857852863&l=en-GB",
+      "relative_path": "Yu Takahashi/15th ANNIVERSARY BEST JYU-GONEN"
+    },
+    "track:1861663797": {
+      "album": "Again - Single",
+      "artist": "Mr.Children",
+      "link": "https://music.apple.com/mx/album/again/1861663796?i=1861663797&l=en-GB",
+      "relative_path": "Mr.Children/Again - Single"
+    },
+    "track:1862061657": {
+      "album": "L&R - Single",
+      "artist": "ME:I",
+      "link": "https://music.apple.com/mx/album/l-r/1862061656?i=1862061657&l=en-GB",
+      "relative_path": "ME_I/L&R - Single"
+    },
+    "track:1862360380": {
+      "album": "ケツノポリス14",
+      "artist": "Ketsumeishi",
+      "link": "https://music.apple.com/mx/album/%E5%92%8C%E3%81%AE%E5%BF%83/1862360379?i=1862360380&l=en-GB",
+      "relative_path": "Ketsumeishi/ケツノポリス14"
+    },
+    "track:1862719249": {
+      "album": "Omoideni Natteyo (feat. Kitsutaka Rentarou) - Single",
+      "artist": "UNFAIR RULE",
+      "link": "https://music.apple.com/mx/album/omoideni-natteyo-feat-kitsutaka-rentarou/1862719248?i=1862719249&l=en-GB",
+      "relative_path": "UNFAIR RULE/Omoideni Natteyo (feat. Kitsutaka Rentarou) - Single"
+    },
+    "track:1863313676": {
+      "album": "Reborn",
+      "artist": "Do As Infinity",
+      "link": "https://music.apple.com/mx/album/grab-it/1863313670?i=1863313676&l=en-GB",
+      "relative_path": "Do As Infinity/Reborn"
+    },
+    "track:1863324343": {
+      "album": "just you... - Single",
+      "artist": "Ms.OOJA",
+      "link": "https://music.apple.com/mx/album/just-you/1863324174?i=1863324343&l=en-GB",
+      "relative_path": "Ms.OOJA/just you... - Single"
+    },
+    "track:1863631485": {
+      "album": "The Story of Us - Single",
+      "artist": "milet",
+      "link": "https://music.apple.com/mx/album/the-story-of-us/1863631186?i=1863631485",
+      "relative_path": "milet/The Story of Us - Single"
+    },
+    "track:1866759816": {
+      "album": "Rikutsudehanasukimito, Kanjoronnoboku",
+      "artist": "yangskinny",
+      "link": "https://music.apple.com/mx/album/waruihito/1866759811?i=1866759816&l=en-GB",
+      "relative_path": "yangskinny/Rikutsudehanasukimito, Kanjoronnoboku"
+    },
+    "track:1867079897": {
+      "album": "ハニカミ - Single",
+      "artist": "Hey! Say! JUMP",
+      "link": "https://music.apple.com/mx/album/%E3%83%8F%E3%83%8B%E3%82%AB%E3%83%9F/1867079500?i=1867079897&l=en-GB",
+      "relative_path": "Hey! Say! JUMP/ハニカミ - Single"
+    },
+    "track:1867140767": {
+      "album": "favorite song - Single",
+      "artist": "FUMINO",
+      "link": "https://music.apple.com/mx/album/favorite-song/1867140766?i=1867140767&l=en-GB",
+      "relative_path": "FUMINO/favorite song - Single"
+    },
+    "track:1867209552": {
+      "album": "君と雨 - Single",
+      "artist": "yukaDD",
+      "link": "https://music.apple.com/mx/album/%E5%90%9B%E3%81%A8%E9%9B%A8/1867209550?i=1867209552&l=en-GB",
+      "relative_path": "yukaDD/君と雨 - Single"
+    },
+    "track:1867245051": {
+      "album": "hibi sanman",
+      "artist": "nishina",
+      "link": "https://music.apple.com/mx/album/dress-code/1867244907?i=1867245051&l=en-GB",
+      "relative_path": "nishina/hibi sanman"
+    },
+    "track:1867375024": {
+      "album": "echo - Single",
+      "artist": "YU-KA",
+      "link": "https://music.apple.com/mx/album/echo/1867375022?i=1867375024&l=en-GB",
+      "relative_path": "YU-KA/echo - Single"
+    },
+    "track:1867687787": {
+      "album": "Cold Night - Single",
+      "artist": "HANA",
+      "link": "https://music.apple.com/mx/album/cold-night/1867687784?i=1867687787",
+      "relative_path": "HANA/Cold Night - Single"
+    },
+    "track:1869542939": {
+      "album": "LOSTandFOUND",
+      "artist": "SennaRin & Hiroyuki Sawano",
+      "link": "https://music.apple.com/mx/album/endroll/1869542654?i=1869542939",
+      "relative_path": "SennaRin & Hiroyuki Sawano/LOSTandFOUND"
+    },
+    "track:1870490492": {
+      "album": "Time With You",
+      "artist": "Kohana Lam",
+      "link": "https://music.apple.com/mx/album/%E7%A5%9E%E6%A7%98%E3%81%AE%E7%A7%92%E9%87%9D%E3%82%92%E5%A3%8A%E3%81%97%E3%81%9F/1870490491?i=1870490492&l=en-GB",
+      "relative_path": "Kohana Lam/Time With You"
+    },
+    "track:1871116827": {
+      "album": "今日という日を - Single",
+      "artist": "Uru",
+      "link": "https://music.apple.com/mx/album/%E4%BB%8A%E6%97%A5%E3%81%A8%E3%81%84%E3%81%86%E6%97%A5%E3%82%92/1871116826?i=1871116827",
+      "relative_path": "Uru/今日という日を - Single"
+    },
+    "track:1871160140": {
+      "album": "Animus Haven - Single",
+      "artist": "sanetii",
+      "link": "https://music.apple.com/mx/album/animus-haven/1871159924?i=1871160140&l=en-GB",
+      "relative_path": "sanetii/Animus Haven - Single"
+    },
+    "track:1872285102": {
+      "album": "STARS - Single",
+      "artist": "Snow Man",
+      "link": "https://music.apple.com/mx/album/stars/1872285099?i=1872285102",
+      "relative_path": "Snow Man/STARS - Single"
+    },
+    "track:1872968326": {
+      "album": "The growing up train - Single",
+      "artist": "Sakurazaka46",
+      "link": "https://music.apple.com/mx/album/the-growing-up-train/1872968319?i=1872968326&l=en-GB",
+      "relative_path": "Sakurazaka46/The growing up train - Single"
+    },
+    "track:1872969221": {
+      "album": "tone (Special Edition)",
+      "artist": "Uru",
+      "link": "https://music.apple.com/mx/album/%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0/1872968990?i=1872969221",
+      "relative_path": "Uru/tone (Special Edition)"
+    },
+    "track:1873288114": {
+      "album": "燦然 / 生きがい - Single",
+      "artist": "SUPER BEAVER",
+      "link": "https://music.apple.com/mx/album/%E7%87%A6%E7%84%B6-sanzen/1873288113?i=1873288114",
+      "relative_path": "SUPER BEAVER/燦然 _ 生きがい - Single"
+    },
+    "track:1873309194": {
+      "album": "SHIN-ON",
+      "artist": "YUZU",
+      "link": "https://music.apple.com/mx/album/shin-on/1873309182?i=1873309194&l=en-GB",
+      "relative_path": "YUZU/SHIN-ON"
+    },
+    "track:1873712688": {
+      "album": "Ichirinka - Single",
+      "artist": "cafune",
+      "link": "https://music.apple.com/mx/album/ichirinka/1873712683?i=1873712688&l=en-GB",
+      "relative_path": "cafune/Ichirinka - Single"
+    },
+    "track:1874235054": {
+      "album": "UNISON - Single",
+      "artist": "Kis-My-Ft2",
+      "link": "https://music.apple.com/mx/album/unison/1874235053?i=1874235054",
+      "relative_path": "Kis-My-Ft2/UNISON - Single"
+    },
+    "track:1874477037": {
+      "album": "PASS ME BY! - Single",
+      "artist": "maya twiggy",
+      "link": "https://music.apple.com/mx/album/pass-me-by/1874477034?i=1874477037",
+      "relative_path": "maya twiggy/PASS ME BY! - Single"
+    },
+    "track:1875271375": {
+      "album": "Into The Wild - Single",
+      "artist": "The Temper Trap",
+      "link": "https://music.apple.com/mx/album/into-the-wild/1875271371?i=1875271375",
+      "relative_path": "The Temper Trap/Into The Wild - Single"
+    },
+    "track:1876130197": {
+      "album": "よあけのうた - EP",
+      "artist": "jo0ji",
+      "link": "https://music.apple.com/mx/album/%E3%81%B2%E3%81%8B%E3%82%8A%E3%81%AE%E3%81%86%E3%81%9F-hikari-no-uta/1876130194?i=1876130197&l=en-GB",
+      "relative_path": "jo0ji/よあけのうた - EP"
+    },
+    "track:1876130200": {
+      "album": "よあけのうた - EP",
+      "artist": "jo0ji",
+      "link": "https://music.apple.com/mx/album/%E3%82%8F%E3%81%8B%E3%82%8C%E3%81%AE%E3%81%86%E3%81%9F-wakare-no-uta/1876130194?i=1876130200",
+      "relative_path": "jo0ji/よあけのうた - EP"
+    },
+    "track:1877868028": {
+      "album": "KIRAMEKIDATTA - Single",
+      "artist": "omeme tenten",
+      "link": "https://music.apple.com/mx/album/kiramekidatta/1877868027?i=1877868028",
+      "relative_path": "omeme tenten/KIRAMEKIDATTA - Single"
+    },
+    "track:1878611265": {
+      "album": "Itai Hiza - Single",
+      "artist": "ao",
+      "link": "https://music.apple.com/mx/album/itai-hiza/1878611264?i=1878611265",
+      "relative_path": "ao/Itai Hiza - Single"
+    },
+    "track:1882337204": {
+      "album": "Resident Evil Requiem - Extra Tracks - Single",
+      "artist": "Capcom Sound Team",
+      "link": "https://music.apple.com/mx/album/through-the-darkness-orchestral-version/1882337202?i=1882337204",
+      "relative_path": "Capcom Sound Team/Resident Evil Requiem - Extra Tracks - Single"
+    },
+    "track:190737693": {
+      "album": "Metal Health (Bonus Track Version)",
+      "artist": "Quiet Riot",
+      "link": "https://music.apple.com/mx/album/cum-on-feel-the-noize/190737573?i=190737693",
+      "relative_path": "Quiet Riot/Metal Health (Bonus Track Version)"
+    },
+    "track:193592428": {
+      "album": "Firehouse (2024 Remaster)",
+      "artist": "FireHouse",
+      "link": "https://music.apple.com/mx/album/dont-treat-me-bad-2024-remaster/193591736?i=193592428",
+      "relative_path": "FireHouse/Firehouse (2024 Remaster)"
+    },
+    "track:193964683": {
+      "album": "Dirty Rotten Filthy Stinking Rich",
+      "artist": "Warrant",
+      "link": "https://music.apple.com/mx/album/sometimes-she-cries/193964384?i=193964683",
+      "relative_path": "Warrant/Dirty Rotten Filthy Stinking Rich"
+    },
+    "track:193965020": {
+      "album": "Dirty Rotten Filthy Stinking Rich",
+      "artist": "Warrant",
+      "link": "https://music.apple.com/mx/album/heaven/193964384?i=193965020",
+      "relative_path": "Warrant/Dirty Rotten Filthy Stinking Rich"
+    },
+    "track:202897389": {
+      "album": "Danger Danger",
+      "artist": "Danger Danger",
+      "link": "https://music.apple.com/mx/album/dont-walk-away/202896865?i=202897389",
+      "relative_path": "Danger Danger/Danger Danger"
+    },
+    "track:202897701": {
+      "album": "Danger Danger",
+      "artist": "Danger Danger",
+      "link": "https://music.apple.com/mx/album/one-step-from-paradise/202896865?i=202897701",
+      "relative_path": "Danger Danger/Danger Danger"
+    },
+    "track:202897715": {
+      "album": "Danger Danger",
+      "artist": "Danger Danger",
+      "link": "https://music.apple.com/mx/album/feels-like-love/202896865?i=202897715",
+      "relative_path": "Danger Danger/Danger Danger"
+    },
+    "track:203709340": {
+      "album": "Born In the U.S.A.",
+      "artist": "Bruce Springsteen",
+      "link": "https://music.apple.com/mx/album/dancing-in-the-dark/203708420?i=203709340&l=en-GB",
+      "relative_path": "Bruce Springsteen/Born In the USA"
+    },
+    "track:220411505": {
+      "album": "Golden Road (Best)",
+      "artist": "ロードオブメジャー",
+      "link": "https://music.apple.com/mx/album/taisetsuna-mono/220411502?i=220411505",
+      "relative_path": "ロードオブメジャー/Golden Road (Best)"
+    },
+    "track:260824738": {
+      "album": "Power to the People",
+      "artist": "Poison",
+      "link": "https://music.apple.com/mx/album/the-last-song/260823659?i=260824738",
+      "relative_path": "Poison/Power to the People"
+    },
+    "track:260832529": {
+      "album": "TRUE LOVE - Single",
+      "artist": "Fumiya Fujii",
+      "link": "https://music.apple.com/mx/album/true-love/260832527?i=260832529&l=en-GB",
+      "relative_path": "Fumiya Fujii/TRUE LOVE - Single"
+    },
+    "track:273891020": {
+      "album": "Scars & Souvenirs",
+      "artist": "Theory of a Deadman",
+      "link": "https://music.apple.com/mx/album/bad-girlfriend/273890964?i=273891020",
+      "relative_path": "Theory of a Deadman/Scars & Souvenirs"
+    },
+    "track:288794083": {
+      "album": "The Illusion of Progress (Bonus Tracks Version)",
+      "artist": "Staind",
+      "link": "https://music.apple.com/mx/album/tangled-up-in-you/288794071?i=288794083",
+      "relative_path": "Staind/The Illusion of Progress (Bonus Tracks Version)"
+    },
+    "track:295534948": {
+      "album": "Tonight I'm Yours",
+      "artist": "Rod Stewart",
+      "link": "https://music.apple.com/mx/album/young-turks/295534903?i=295534948",
+      "relative_path": "Rod Stewart/Tonight I'm Yours"
+    },
+    "track:298109233": {
+      "album": "Wake Me When It's Over",
+      "artist": "Faster Pussycat",
+      "link": "https://music.apple.com/mx/album/house-of-pain/298109228?i=298109233",
+      "relative_path": "Faster Pussycat/Wake Me When It's Over"
+    },
+    "track:298272085": {
+      "album": "Lita",
+      "artist": "Lita Ford",
+      "link": "https://music.apple.com/mx/album/kiss-me-deadly/298271951?i=298272085",
+      "relative_path": "Lita Ford/Lita"
+    },
+    "track:302138818": {
+      "album": "Skyscraper",
+      "artist": "David Lee Roth",
+      "link": "https://music.apple.com/mx/album/just-like-paradise/302138810?i=302138818&l=en-GB",
+      "relative_path": "David Lee Roth/Skyscraper"
+    },
+    "track:306462248": {
+      "album": "TRF 15th Anniversary BEST - MEMORIES -",
+      "artist": "TRF",
+      "link": "https://music.apple.com/mx/album/boy-meets-girl/306461871?i=306462248&l=en-GB",
+      "relative_path": "TRF/TRF 15th Anniversary BEST - MEMORIES -"
+    },
+    "track:321975428": {
+      "album": "Damn Yankees",
+      "artist": "Damn Yankees",
+      "link": "https://music.apple.com/mx/album/high-enough/321975422?i=321975428",
+      "relative_path": "Damn Yankees/Damn Yankees"
+    },
+    "track:357870016": {
+      "album": "Mane Attraction",
+      "artist": "White Lion",
+      "link": "https://music.apple.com/mx/album/love-dont-come-easy/357869817?i=357870016",
+      "relative_path": "White Lion/Mane Attraction"
+    },
+    "track:367960622": {
+      "album": "Balance",
+      "artist": "Van Halen",
+      "link": "https://music.apple.com/mx/album/cant-stop-lovin-you/367960619?i=367960622&l=en-GB",
+      "relative_path": "Van Halen/Balance"
+    },
+    "track:370711731": {
+      "album": "Waka Waka (Esto es Africa) [feat. Freshlyground] - Single",
+      "artist": "Shakira",
+      "link": "https://music.apple.com/mx/album/waka-waka-esto-es-africa-feat-freshlyground/370711726?i=370711731&l=en-GB",
+      "relative_path": "Shakira/Waka Waka (Esto es Africa) [feat. Freshlyground] - Single"
+    },
+    "track:386544565": {
+      "album": "Dark Horse",
+      "artist": "Nickelback",
+      "link": "https://music.apple.com/mx/album/burn-it-to-the-ground/386544563?i=386544565",
+      "relative_path": "Nickelback/Dark Horse"
+    },
+    "track:386544566": {
+      "album": "Dark Horse",
+      "artist": "Nickelback",
+      "link": "https://music.apple.com/mx/album/gotta-be-somebody/386544563?i=386544566",
+      "relative_path": "Nickelback/Dark Horse"
+    },
+    "track:418513853": {
+      "album": "Live Is Life - Single",
+      "artist": "Opus",
+      "link": "https://music.apple.com/mx/album/live-is-life-digitally-remastered-single-version/418513852?i=418513853",
+      "relative_path": "Opus/Live Is Life - Single"
+    },
+    "track:435761212": {
+      "album": "Torches",
+      "artist": "Foster the People",
+      "link": "https://music.apple.com/mx/album/pumped-up-kicks/435761204?i=435761212",
+      "relative_path": "Foster the People/Torches"
+    },
+    "track:478090784": {
+      "album": "A Different Day",
+      "artist": "Cody Johnson",
+      "link": "https://music.apple.com/mx/album/diamond-in-my-pocket/478090332?i=478090784",
+      "relative_path": "Cody Johnson/A Different Day"
+    },
+    "track:505055781": {
+      "album": "Up All Night (The Souvenir Edition)",
+      "artist": "One Direction",
+      "link": "https://music.apple.com/mx/album/what-makes-you-beautiful/505055768?i=505055781&l=en-GB",
+      "relative_path": "One Direction/Up All Night (The Souvenir Edition)"
+    },
+    "track:539931527": {
+      "album": "Superfly",
+      "artist": "Superfly",
+      "link": "https://music.apple.com/mx/album/%E6%84%9B%E3%82%92%E3%81%93%E3%82%81%E3%81%A6%E8%8A%B1%E6%9D%9F%E3%82%92/539931518?i=539931527&l=en-GB",
+      "relative_path": "Superfly/Superfly"
+    },
+    "track:550978548": {
+      "album": "#3 (Deluxe Version)",
+      "artist": "The Script",
+      "link": "https://music.apple.com/mx/album/six-degrees-of-separation/550978544?i=550978548",
+      "relative_path": "The Script/#3 (Deluxe Version)"
+    },
+    "track:574051407": {
+      "album": "The Razors Edge",
+      "artist": "AC/DC",
+      "link": "https://music.apple.com/mx/album/thunderstruck/574049507?i=574051407&l=en-GB",
+      "relative_path": "AC_DC/The Razors Edge"
+    },
+    "track:586705495": {
+      "album": "Born Free",
+      "artist": "Kid Rock",
+      "link": "https://music.apple.com/mx/album/born-free/586705482?i=586705495",
+      "relative_path": "Kid Rock/Born Free"
+    },
+    "track:594740617": {
+      "album": "Dos Angeles",
+      "artist": "Joe Inoue",
+      "link": "https://music.apple.com/mx/album/futaride-hitori-the-journey/594740422?i=594740617",
+      "relative_path": "Joe Inoue/Dos Angeles"
+    },
+    "track:594740673": {
+      "album": "Dos Angeles",
+      "artist": "Joe Inoue",
+      "link": "https://music.apple.com/mx/album/lights-album-ver/594740422?i=594740673",
+      "relative_path": "Joe Inoue/Dos Angeles"
+    },
+    "track:603231646": {
+      "album": "Magnetic (Deluxe Version)",
+      "artist": "The Goo Goo Dolls",
+      "link": "https://music.apple.com/mx/album/come-to-me/603231374?i=603231646",
+      "relative_path": "The Goo Goo Dolls/Magnetic (Deluxe Version)"
+    },
+    "track:610187009": {
+      "album": "In a Perfect World (Expanded Edition)",
+      "artist": "Kodaline",
+      "link": "https://music.apple.com/mx/album/one-day/610186727?i=610187009",
+      "relative_path": "Kodaline/In a Perfect World (Expanded Edition)"
+    },
+    "track:610187011": {
+      "album": "In a Perfect World (Expanded Edition)",
+      "artist": "Kodaline",
+      "link": "https://music.apple.com/mx/album/love-like-this/610186727?i=610187011",
+      "relative_path": "Kodaline/In a Perfect World (Expanded Edition)"
+    },
+    "track:63835657": {
+      "album": "Laura Pausini (Spanish Version)",
+      "artist": "Laura Pausini",
+      "link": "https://music.apple.com/mx/album/amores-extra%C3%B1os/63835687?i=63835657&l=en-GB",
+      "relative_path": "Laura Pausini/Laura Pausini (Spanish Version)"
+    },
+    "track:643749750": {
+      "album": "From Dusk Till Dawn",
+      "artist": "ROOKiEZ is PUNK'D",
+      "link": "https://music.apple.com/mx/album/song-for-overcame-version/643749078?i=643749750",
+      "relative_path": "ROOKiEZ is PUNK'D/From Dusk Till Dawn"
+    },
+    "track:717168302": {
+      "album": "Some Kind of Trouble (Deluxe Edition)",
+      "artist": "James Blunt",
+      "link": "https://music.apple.com/mx/album/stay-the-night/717168285?i=717168302",
+      "relative_path": "James Blunt/Some Kind of Trouble (Deluxe Edition)"
+    },
+    "track:723513231": {
+      "album": "Flesh & Blood (Bonus Track Version)",
+      "artist": "Poison",
+      "link": "https://music.apple.com/mx/album/life-goes-on/723512797?i=723513231",
+      "relative_path": "Poison/Flesh & Blood (Bonus Track Version)"
+    },
+    "track:723513376": {
+      "album": "Flesh & Blood (Bonus Track Version)",
+      "artist": "Poison",
+      "link": "https://music.apple.com/mx/album/something-to-believe-in/723512797?i=723513376",
+      "relative_path": "Poison/Flesh & Blood (Bonus Track Version)"
+    },
+    "track:78759770": {
+      "album": "Rowdy",
+      "artist": "Hank Williams, Jr.",
+      "link": "https://music.apple.com/mx/album/dixie-on-my-mind/78759999?i=78759770",
+      "relative_path": "Hank Williams, Jr/Rowdy"
+    },
+    "track:808636737": {
+      "album": "Monolith",
+      "artist": "04 Limited Sazabys",
+      "link": "https://music.apple.com/mx/album/monolith/808636728?i=808636737",
+      "relative_path": "04 Limited Sazabys/Monolith"
+    },
+    "track:850569480": {
+      "album": "Plastic Beach",
+      "artist": "Gorillaz",
+      "link": "https://music.apple.com/mx/album/on-melancholy-hill/850569437?i=850569480",
+      "relative_path": "Gorillaz/Plastic Beach"
+    },
+    "track:895127098": {
+      "album": "(What's the Story) Morning Glory? [Deluxe Edition] [Remastered]",
+      "artist": "Oasis",
+      "link": "https://music.apple.com/mx/album/champagne-supernova-remastered/895127002?i=895127098",
+      "relative_path": "Oasis/(What's the Story) Morning Glory_ [Deluxe Edition] [Remastered]"
+    },
+    "track:920304035": {
+      "album": "RELOAD",
+      "artist": "BACK-ON",
+      "link": "https://music.apple.com/mx/album/%E3%83%8B%E3%83%96%E3%83%B3%E3%83%8E%E3%82%A4%E3%83%81/920304032?i=920304035",
+      "relative_path": "BACK-ON/RELOAD"
+    },
+    "track:920304037": {
+      "album": "RELOAD",
+      "artist": "BACK-ON",
+      "link": "https://music.apple.com/mx/album/infinity/920304032?i=920304037",
+      "relative_path": "BACK-ON/RELOAD"
+    },
+    "track:944035915": {
+      "album": "Elements, Pt. 1 & 2 (Complete Edition)",
+      "artist": "Stratovarius",
+      "link": "https://music.apple.com/mx/album/learning-to-fly/944035904?i=944035915&l=en-GB",
+      "relative_path": "Stratovarius/Elements, Pt. 1 & 2 (Complete Edition)"
+    },
+    "track:945240220": {
+      "album": "Coming Up for Air (Expanded Edition)",
+      "artist": "Kodaline",
+      "link": "https://music.apple.com/mx/album/the-one/945240218?i=945240220",
+      "relative_path": "Kodaline/Coming Up for Air (Expanded Edition)"
+    },
+    "track:962678236": {
+      "album": "Miiro - Single",
+      "artist": "AKINO from bless4",
+      "link": "https://music.apple.com/mx/album/miiro/962677643?i=962678236",
+      "relative_path": "AKINO from bless4/Miiro - Single"
+    },
+    "track:975415391": {
+      "album": "レインボーロード",
+      "artist": "Ayaka",
+      "link": "https://music.apple.com/mx/album/beautiful/975415385?i=975415391",
+      "relative_path": "Ayaka/レインボーロード"
+    },
+    "track:976832495": {
+      "album": "1984",
+      "artist": "Van Halen",
+      "link": "https://music.apple.com/mx/album/jump/976831013?i=976832495&l=en-GB",
+      "relative_path": "Van Halen/1984"
+    }
+  },
+  "version": 1
+}

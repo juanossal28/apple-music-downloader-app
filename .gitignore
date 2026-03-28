@@ -1,0 +1,7 @@
+__pycache__/
+venv/
+.env
+.vscode/
+data/download_destination.txt
+data/download_registry.json
+data/links.txt
